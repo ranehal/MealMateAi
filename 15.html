@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exit Strategy & Long-Term Vision</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-exit {
+            position: absolute;
+            font-size: 2.4rem;
+            opacity: 0.11;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .exit-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .exit-2 { top: 16%; right: 6%; animation-delay: 1.4s; }
+        .exit-3 { bottom: 14%; left: 8%; animation-delay: 2.8s; }
+        .exit-4 { bottom: 20%; right: 10%; animation-delay: 1.9s; }
+        .exit-5 { top: 48%; left: 2%; animation-delay: 1s; }
+        .exit-6 { top: 58%; right: 3%; animation-delay: 3.4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 2rem 3rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.95rem;
+            font-weight: 700;
+            color: #7B1FA2;
+            text-shadow: 2px 2px 4px rgba(123, 31, 162, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+        }
+
+        .title-icon {
+            font-size: 2.15rem;
+            animation: rocket-launch 2.5s ease-in-out infinite;
+        }
+
+        @keyframes rocket-launch {
+            0%, 100% { transform: translateY(0) scale(1); }
+            25% { transform: translateY(-10px) scale(1.05); }
+            75% { transform: translateY(-10px) scale(1.05) rotate(5deg); }
+        }
+
+        .subtitle {
+            font-size: 0.92rem;
+            color: #8E24AA;
+            font-weight: 600;
+            margin-top: 0.35rem;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.3rem;
+            max-height: calc(100% - 8rem);
+        }
+
+        /* Left Column - Vision & Exit Paths */
+        .vision-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 14px;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 6px 24px rgba(123, 31, 162, 0.06);
+            padding: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(123, 31, 162, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid rgba(123, 31, 162, 0.18);
+        }
+
+        .card-icon {
+            font-size: 1.4rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #7B1FA2;
+        }
+
+        /* Vision Content */
+        .vision-text {
+            font-size: 0.82rem;
+            color: #424242;
+            line-height: 1.55;
+        }
+
+        .vision-highlight {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.15), rgba(171, 71, 188, 0.08));
+            color: #6A1B9A;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            margin: 0.2rem 0;
+        }
+
+        /* Exit Path Items */
+        .exit-paths {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .exit-path {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.55rem;
+            padding: 0.7rem;
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.08), rgba(171, 71, 188, 0.04));
+            border-radius: 11px;
+            border-left: 4px solid #AB47BC;
+            transition: all 0.3s ease;
+        }
+
+        .exit-path:hover {
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.15), rgba(171, 71, 188, 0.08));
+            transform: translateX(4px);
+        }
+
+        .path-target {
+            font-weight: 700;
+            color: #7B1FA2;
+            font-size: 0.84rem;
+            min-width: fit-content;
+        }
+
+        .path-desc {
+            flex: 1;
+            font-size: 0.76rem;
+            color: #424242;
+            line-height: 1.45;
+        }
+
+        /* Right Column - Valuation & Quote */
+        .valuation-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Valuation Milestone */
+        .valuation-card {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.12), rgba(255, 193, 7, 0.06));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2.5px solid rgba(255, 152, 0, 0.35);
+            border-radius: 16px;
+            padding: 1.2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .valuation-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 36px rgba(255, 152, 0, 0.2);
+        }
+
+        .val-label {
+            font-size: 0.88rem;
+            color: #E65100;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .val-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #BF360C;
+            line-height: 1.2;
+            margin-bottom: 0.4rem;
+        }
+
+        .val-details {
+            font-size: 0.78rem;
+            color: #F57C00;
+            line-height: 1.45;
+        }
+
+        /* Timeline/Roadmap */
+        .roadmap-container {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 32px rgba(123, 31, 162, 0.08);
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .roadmap-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #7B1FA2;
+            text-align: center;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Roadmap Flow */
+        .roadmap-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        .milestone {
+            width: 90%;
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.12), rgba(171, 71, 188, 0.06));
+            border: 2px solid rgba(156, 39, 176, 0.3);
+            border-radius: 12px;
+            padding: 0.7rem 0.9rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .milestone:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(156, 39, 176, 0.2);
+            border-color: #AB47BC;
+        }
+
+        .ms-icon {
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .ms-label {
+            font-weight: 700;
+            color: #6A1B9A;
+            font-size: 0.82rem;
+            line-height: 1.2;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #AB47BC;
+            animation: arrow-flow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes arrow-flow {
+            0%, 100% { transform: translateY(0); opacity: 0.7; }
+            50% { transform: translateY(4px); opacity: 1; }
+        }
+
+        /* Speaker Quote */
+        .speaker-quote {
+            background: linear-gradient(135deg, rgba(230, 81, 0, 0.1), rgba(245, 124, 0, 0.05));
+            border: 2px solid rgba(230, 81, 0, 0.3);
+            border-radius: 14px;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .quote-icon {
+            font-size: 2rem;
+            color: #E65100;
+            opacity: 0.3;
+            position: absolute;
+            top: 0.5rem;
+            left: 0.8rem;
+        }
+
+        .quote-text {
+            font-size: 0.78rem;
+            color: #D84315;
+            line-height: 1.55;
+            font-style: italic;
+            padding-left: 1.8rem;
+            font-weight: 500;
+        }
+
+        .quote-highlight {
+            color: #7B1FA2;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 0.9rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 1.8rem 2.5rem; }
+            .main-title { font-size: 1.7rem; }
+            .val-value { font-size: 2.1rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper { 
+                grid-template-columns: 1fr; 
+                gap: 1rem;
+            }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-exit exit-1">🚀</div>
+        <div class="floating-exit exit-2">💎</div>
+        <div class="floating-exit exit-3">🎯</div>
+        <div class="floating-exit exit-4">📈</div>
+        <div class="floating-exit exit-5">🏆</div>
+        <div class="floating-exit exit-6">🌟</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#7B1FA2"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#8E24AA"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#AB47BC"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#BA68C8"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">🚀</span>
+                Exit Strategy & Long-Term Vision
+                <span class="title-icon">🚀</span>
+            </h1>
+            <p class="subtitle">Becoming the Global Standard for "Food Decisioning"</p>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            <!-- Left Column - Vision & Exit Paths -->
+            <div class="vision-column">
+                <!-- Endgame Vision -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-icon">🌏</span>
+                        <h3 class="card-title">The Endgame Vision</h3>
+                    </div>
+                    <div class="vision-text">
+                        From <span class="vision-highlight">"Dhaka Pilot"</span> to <span class="vision-highlight">"Regional OS for SE Asia"</span>. MealMate AI becomes the mandatory software layer for every smart fridge and smart home ecosystem.
+                    </div>
+                </div>
+
+                <!-- Exit Paths -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-icon">💰</span>
+                        <h3 class="card-title">Potential Exit Paths (Series B / Acquisition)</h3>
+                    </div>
+                    
+                    <div class="exit-paths">
+                        <div class="exit-path">
+                            <span class="path-target">Target A:</span>
+                            <div class="path-desc"><strong>FMCG Giants</strong> — Unilever/Nestlé (Access to unprecedented consumption data vs. just purchase data)</div>
+                        </div>
+
+                        <div class="exit-path">
+                            <span class="path-target">Target B:</span>
+                            <div class="path-desc"><strong>Retail Titans</strong> — Walmart/Delivery Hero/Chaldal (Vertical integration to own customer's decision-making process)</div>
+                        </div>
+
+                        <div class="exit-path">
+                            <span class="path-target">Target C:</span>
+                            <div class="path-desc"><strong>Tech Conglomerates</strong> — Google/Amazon (Completing Smart Home "Kitchen" pillar)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Valuation & Roadmap -->
+            <div class="valuation-column">
+                <!-- Valuation Milestone -->
+                <div class="valuation-card">
+                    <div class="val-label">🎯 Valuation Milestone</div>
+                    <div class="val-value">$100M+</div>
+                    <div class="val-details">
+                        Upon reaching <strong>1 Million active households</strong><br>
+                        and capturing <strong>10%</strong> of regional grocery commission market
+                    </div>
+                </div>
+
+                <!-- Exit Roadmap -->
+                <div class="roadmap-container">
+                    <h3 class="roadmap-title">📍 Strategic Exit Roadmap</h3>
+                    
+                    <div class="roadmap-flow">
+                        <div class="milestone">
+                            <div class="ms-icon">🏠</div>
+                            <div class="ms-label">Dhaka Pilot<br>Proof of Concept</div>
+                        </div>
+                        
+                        <div class="flow-arrow">↓</div>
+                        
+                        <div class="milestone">
+                            <div class="ms-icon">🌏</div>
+                            <div class="ms-label">SE Asia Expansion<br>Regional Dominance</div>
+                        </div>
+                        
+                        <div class="flow-arrow">↓</div>
+                        
+                        <div class="milestone">
+                            <div class="ms-icon">💎</div>
+                            <div class="ms-label">$100M+ Valuation<br>Exit Opportunity</div>
+                        </div>
+                        
+                        <div class="flow-arrow">→</div>
+                        
+                        <div class="milestone" style="background: linear-gradient(135deg, rgba(255, 152, 0, 0.18), rgba(255, 193, 7, 0.1)); border-color: rgba(255, 152, 0, 0.45);">
+                            <div class="ms-icon">🏆</div>
+                            <div class="ms-label" style="color: #E65100;">Strategic Acquisition<br>or IPO</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Speaker Script -->
+                <div class="speaker-quote">
+                    <span class="quote-icon">"</span>
+                    <div class="quote-text">
+                        Our exit isn't just about being bought; it's about being <span class="quote-highlight">indispensable</span>. When major grocer realizes they are losing money because they don't know what happens inside customer's fridge—they will need to buy one company that does. That company is <span class="quote-highlight">MealMate AI</span>.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Slide 15 / 20</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-exit');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg}')`;
+            });
+        });
+
+        // Add interactive effects to milestones
+        document.querySelectorAll('.milestone').forEach(ms => {
+            ms.addEventListener('mouseenter', () => {
+                ms.style.borderColor = '#CE93D8';
+            });
+            ms.addEventListener('mouseleave', () => {
+                if (!ms.textContent.includes('IPO')) {
+                    ms.style.borderColor = 'rgba(156, 39, 176, 0.3)';
+                } else {
+                    ms.style.borderColor = 'rgba(255, 152, 0, 0.45)';
+                }
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

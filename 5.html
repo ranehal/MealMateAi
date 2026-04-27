@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Oracle Architecture</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-tech {
+            position: absolute;
+            font-size: 2.4rem;
+            opacity: 0.1;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .tech-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .tech-2 { top: 16%; right: 6%; animation-delay: 1.4s; }
+        .tech-3 { bottom: 14%; left: 8%; animation-delay: 2.8s; }
+        .tech-4 { bottom: 20%; right: 10%; animation-delay: 1.9s; }
+        .tech-5 { top: 48%; left: 2%; animation-delay: 1s; }
+        .tech-6 { top: 58%; right: 3%; animation-delay: 3.4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 2.2rem 3.2rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.05rem;
+            font-weight: 700;
+            color: #1565C0;
+            text-shadow: 2px 2px 4px rgba(21, 101, 192, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+        }
+
+        .title-icon {
+            font-size: 2.3rem;
+            animation: gear-spin 6s linear infinite;
+        }
+
+        @keyframes gear-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .subtitle {
+            font-size: 0.96rem;
+            color: #1976D2;
+            font-weight: 500;
+            margin-top: 0.4rem;
+            line-height: 1.4;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.3rem;
+            max-height: calc(100% - 8.5rem);
+        }
+
+        /* Left Column - Algorithm */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        /* Algorithm Card */
+        .algorithm-card {
+            background: linear-gradient(135deg, rgba(21, 101, 192, 0.08) 0%, rgba(25, 118, 210, 0.04) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 2px solid rgba(21, 101, 192, 0.25);
+            box-shadow: 
+                0 8px 32px rgba(21, 101, 192, 0.06),
+                inset 0 2px 0 rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            transition: all 0.4s ease;
+        }
+
+        .algorithm-card:hover {
+            box-shadow: 
+                0 12px 40px rgba(21, 101, 192, 0.12),
+                inset 0 2px 0 rgba(255, 255, 255, 0.95);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid rgba(21, 101, 192, 0.18);
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1565C0;
+        }
+
+        .algorithm-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6F00, #F57C00);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            margin-left: auto;
+            letter-spacing: 0.5px;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: rgba(30, 41, 59, 0.92);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-top: 0.8rem;
+            border: 1px solid rgba(71, 85, 105, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 28px;
+            background: rgba(51, 65, 85, 0.9);
+            border-radius: 11px 11px 0 0;
+            border-bottom: 1px solid rgba(71, 85, 105, 0.4);
+        }
+
+        .code-dots {
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            display: flex;
+            gap: 6px;
+            z-index: 2;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #EF4444; }
+        .dot-yellow { background: #FBBF24; }
+        .dot-green { background: #10B981; }
+
+        .code-content {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.88rem;
+            color: #E2E8F0;
+            line-height: 1.7;
+            margin-top: 16px;
+            white-space: pre;
+        }
+
+        .code-keyword { color: #F472B6; }
+        .code-function { color: #60A5FA; }
+        .code-variable { color: #A78BFA; }
+        .code-operator { color: #FB923C; }
+        .code-comment { color: #6B7280; font-style: italic; }
+
+        /* Tech Components */
+        .tech-components {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .component-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 6px 24px rgba(21, 101, 192, 0.06);
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .component-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .component-card:hover::before {
+            left: 100%;
+        }
+
+        .component-card:hover {
+            transform: translateX(5px);
+            border-color: rgba(21, 101, 192, 0.35);
+        }
+
+        .component-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .component-icon {
+            font-size: 1.6rem;
+        }
+
+        .component-title {
+            font-weight: 700;
+            color: #1565C0;
+            font-size: 1rem;
+        }
+
+        .component-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .component-list li {
+            font-size: 0.84rem;
+            color: #424242;
+            line-height: 1.55;
+            padding: 0.4rem 0;
+            padding-left: 1.3rem;
+            position: relative;
+        }
+
+        .component-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #1976D2;
+            font-weight: bold;
+        }
+
+        /* Right Column - Architecture */
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        /* Architecture Diagram */
+        .architecture-diagram {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 32px rgba(21, 101, 192, 0.08);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            position: relative;
+        }
+
+        .arch-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1565C0;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .arch-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            width: 100%;
+        }
+
+        .arch-node {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.15) 0%, rgba(66, 165, 245, 0.08) 100%);
+            border: 2px solid rgba(33, 150, 243, 0.35);
+            border-radius: 14px;
+            padding: 0.9rem 1.5rem;
+            text-align: center;
+            width: 85%;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .arch-node:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.2);
+        }
+
+        .arch-node-icon {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .arch-node-text {
+            font-weight: 600;
+            color: #0D47A1;
+            font-size: 0.92rem;
+        }
+
+        .arch-arrow {
+            font-size: 1.8rem;
+            color: #42A5F5;
+            animation: arrow-flow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes arrow-flow {
+            0%, 100% { transform: translateY(0); opacity: 0.7; }
+            50% { transform: translateY(5px); opacity: 1; }
+        }
+
+        .privacy-shield {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(129, 199, 132, 0.1) 100%);
+            border: 2px solid rgba(76, 175, 80, 0.4);
+            border-radius: 12px;
+            padding: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            animation: shield-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes shield-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.3); }
+            50% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+        }
+
+        .shield-icon {
+            font-size: 2rem;
+        }
+
+        .shield-text {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #2E7D32;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 2rem 2.5rem; }
+            .main-title { font-size: 1.8rem; }
+            .code-content { font-size: 0.8rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper { 
+                grid-template-columns: 1fr; 
+                gap: 1rem;
+            }
+            .privacy-shield { 
+                position: static; 
+                transform: none; 
+                margin-top: 1rem;
+            }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-tech tech-1">⚙️</div>
+        <div class="floating-tech tech-2">🔧</div>
+        <div class="floating-tech tech-3">🛡️</div>
+        <div class="floating-tech tech-4">📊</div>
+        <div class="floating-tech tech-5">🔍</div>
+        <div class="floating-tech tech-6">💻</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1565C0"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1976D2"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1E88E5"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#42A5F5"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">⚙️</span>
+                The "Decision Oracle" Architecture (Technical)
+                <span class="title-icon">⚙️</span>
+            </h1>
+            <p class="subtitle">Proprietary Tech: Beyond Simple Recommendation Engines</p>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Algorithm Card -->
+                <div class="algorithm-card">
+                    <div class="card-header">
+                        <span class="card-icon">🧮</span>
+                        <h2 class="card-title">The "Use-First" Algorithm</h2>
+                        <span class="algorithm-badge">CORE IP</span>
+                    </div>
+                    <p style="font-size: 0.88rem; color: #424242; line-height: 1.5; margin-bottom: 0.5rem;">
+                        Our core IP: A multi-variable scoring engine that optimizes every kitchen decision
+                    </p>
+                    <div class="code-block">
+                        <div class="code-dots">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                        </div>
+                        <pre class="code-content"><span class="code-keyword">Score</span> = (<span class="code-variable">Spoilage_Risk</span> <span class="code-operator">*</span> <span class="code-variable">Weight</span>)
+      <span class="code-operator">+</span> (<span class="code-variable">Nutritional_Alignment</span> <span class="code-operator">*</span> <span class="code-variable">Weight</span>)
+      <span class="code-operator">+</span> (<span class="code-variable">Prep_Time_Fit</span>)</pre>
+                    </div>
+                </div>
+
+                <!-- Tech Components -->
+                <div class="tech-components">
+                    <!-- Computer Vision -->
+                    <div class="component-card">
+                        <div class="component-header">
+                            <span class="component-icon">👁️</span>
+                            <h3 class="component-title">Computer Vision Pipeline</h3>
+                        </div>
+                        <ul class="component-list">
+                            <li>Fine-tuned models for regional ingredient recognition (Bangladeshi vegetables/fish)</li>
+                            <li>Edge-processing capabilities for fast, offline receipt scanning</li>
+                        </ul>
+                    </div>
+
+                    <!-- Privacy AI -->
+                    <div class="component-card">
+                        <div class="component-header">
+                            <span class="component-icon">🛡️</span>
+                            <h3 class="component-title">Privacy-Preserving AI</h3>
+                        </div>
+                        <ul class="component-list">
+                            <li><strong>Federated Learning:</strong> Improve recommendations without uploading private data</li>
+                            <li><strong>Privacy as Moat:</strong> Model training happens on user's device</li>
+                        </ul>
+                    </div>
+
+                    <!-- Data Layer -->
+                    <div class="component-card">
+                        <div class="component-header">
+                            <span class="component-icon">🗄️</span>
+                            <h3 class="component-title">Data Layer Integration</h3>
+                        </div>
+                        <ul class="component-list">
+                            <li>Real-time price scraping from local retail APIs</li>
+                            <li>Continuous inventory syncing across platforms</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Architecture Diagram -->
+            <div class="right-column">
+                <div class="architecture-diagram">
+                    <h3 class="arch-title">🏗️ System Architecture Flow</h3>
+                    
+                    <div class="arch-flow">
+                        <div class="arch-node">
+                            <span class="arch-node-icon">📱</span>
+                            <div class="arch-node-text">Mobile Device<br>(User Interface)</div>
+                        </div>
+                        
+                        <div class="arch-arrow">↓</div>
+                        
+                        <div class="arch-node">
+                            <span class="arch-node-icon">🧠</span>
+                            <div class="arch-node-text">Edge AI Layer<br>(Local Processing)</div>
+                        </div>
+                        
+                        <div class="arch-arrow">↓</div>
+                        
+                        <div class="arch-node">
+                            <span class="arch-node-icon">☁️</span>
+                            <div class="arch-node-text">Cloud API Backend<br>(AI Nutrition Engine)</div>
+                        </div>
+                        
+                        <div class="arch-arrow">↓</div>
+                        
+                        <div class="arch-node">
+                            <span class="arch-node-icon">🔄</span>
+                            <div class="arch-node-text">Federated Learning Loop<br>(Continuous Improvement)</div>
+                        </div>
+                    </div>
+
+                    <!-- Privacy Shield Badge -->
+                    <div class="privacy-shield">
+                        <span class="shield-icon">🛡️</span>
+                        <span class="shield-text">Privacy<br>Shield<br>Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Slide 5 / 20</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-tech');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg'})`;
+            });
+        });
+
+        // Add interactive effects to architecture nodes
+        document.querySelectorAll('.arch-node').forEach(node => {
+            node.addEventListener('mouseenter', () => {
+                node.style.borderColor = '#1E88E5';
+            });
+            node.addEventListener('mouseleave', () => {
+                node.style.borderColor = 'rgba(33, 150, 243, 0.35)';
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

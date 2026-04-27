@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dominating the Deshi Market</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --warm-orange: #FF9800;
+            --soft-pink: #FF8A80;
+            --fresh-green: #66BB6A;
+            --sunny-yellow: #FFD54F;
+            --cream-bg: #FFF8E1;
+            --soft-brown: #8D6E63;
+            --light-pink: #FFE0E0;
+            --light-orange: #FFE0B2;
+            --light-green: #E8F5E9;
+            --light-yellow: #FFF9C4;
+            --white: #ffffff;
+            --text-dark: #5D4037;
+            --text-medium: #795548;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFE0E0 50%, #FFE0B2 100%);
+            color: var(--text-dark);
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        @-webkit-keyframes slideDown {
+            from { opacity: 0; -webkit-transform: translateY(-30px); transform: translateY(-30px); }
+            to { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; -webkit-transform: translateY(-30px); transform: translateY(-30px); }
+            to { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+        }
+        
+        @-webkit-keyframes slideUp {
+            from { opacity: 0; -webkit-transform: translateY(30px); transform: translateY(30px); }
+            to { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; -webkit-transform: translateY(30px); transform: translateY(30px); }
+            to { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+        }
+        
+        @-webkit-keyframes bounceIn {
+            0% { opacity: 0; -webkit-transform: scale(0.3); transform: scale(0.3); }
+            50% { -webkit-transform: scale(1.1); transform: scale(1.1); }
+            100% { opacity: 1; -webkit-transform: scale(1); transform: scale(1); }
+        }
+        @keyframes bounceIn {
+            0% { opacity: 0; -webkit-transform: scale(0.3); transform: scale(0.3); }
+            50% { -webkit-transform: scale(1.1); transform: scale(1.1); }
+            100% { opacity: 1; -webkit-transform: scale(1); transform: scale(1); }
+        }
+        
+        @-webkit-keyframes pulse {
+            0%, 100% { -webkit-transform: scale(1); transform: scale(1); }
+            50% { -webkit-transform: scale(1.05); transform: scale(1.05); }
+        }
+        @keyframes pulse {
+            0%, 100% { -webkit-transform: scale(1); transform: scale(1); }
+            50% { -webkit-transform: scale(1.05); transform: scale(1.05); }
+        }
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            padding: 40px 70px 20px;
+            background: rgba(255, 255, 255, 0.85);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            -webkit-animation: slideDown 0.8s ease-out;
+            animation: slideDown 0.8s ease-out;
+        }
+        .header-content h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            background: linear-gradient(135deg, var(--fresh-green), var(--warm-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        .header-content p {
+            color: var(--text-medium);
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .winner-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--fresh-green), #43A047);
+            color: var(--white);
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(102, 187, 106, 0.3);
+            -webkit-animation: pulse 3s infinite;
+            animation: pulse 3s infinite;
+        }
+        
+        .table-container {
+            flex: 1;
+            padding: 25px 70px 35px;
+            overflow: hidden;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            -webkit-animation: bounceIn 0.8s ease-out 0.2s both;
+            animation: bounceIn 0.8s ease-out 0.2s both;
+        }
+        th, td {
+            padding: 14px 10px;
+            text-align: center;
+            border-bottom: 1px solid #FFE0B2;
+            font-size: 13px;
+        }
+        th {
+            background: #FFF8E1;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px 8px;
+        }
+        td {
+            font-size: 13px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .feature-col {
+            text-align: left;
+            padding-left: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            min-width: 160px;
+            font-size: 13px;
+        }
+        .ggod-col {
+            background: #E8F5E9;
+            font-weight: 700;
+            color: var(--fresh-green);
+            position: relative;
+        }
+        .competitor-col {
+            color: var(--text-light);
+        }
+        
+        .check-icon {
+            color: var(--fresh-green);
+            font-size: 20px;
+            display: inline-block;
+        }
+        .cross-icon {
+            color: var(--text-light);
+            font-size: 20px;
+            opacity: 0.5;
+            display: inline-block;
+        }
+        
+        .cell-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .highlight-text {
+            font-weight: 700;
+            color: var(--fresh-green);
+            font-size: 12px;
+        }
+        .regular-text {
+            color: var(--text-medium);
+            font-weight: 400;
+            font-size: 12px;
+        }
+        
+        .feature-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--light-orange);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--warm-orange);
+            font-size: 14px;
+            margin-right: 8px;
+            -webkit-flex-shrink: 0;
+            flex-shrink: 0;
+        }
+        
+        .header-ggod {
+            color: var(--fresh-green);
+            font-size: 14px;
+        }
+        .header-competitor {
+            color: var(--text-medium);
+            font-size: 12px;
+        }
+        
+        .winner-crown {
+            display: inline-block;
+            margin-right: 4px;
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>We Win the Kitchen Crown! 👑</h1>
+                <p>GroceryGOD vs Global & Local Players (2026)</p>
+            </div>
+            <div class="winner-badge">
+                <i class="material-icons" style="font-size: 18px;">emoji_events</i>
+                Winner: 7/7 Features
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 22%; text-align: left; padding-left: 20px;">Feature</th>
+                        <th class="header-ggod" style="width: 16%;">
+                            <span class="winner-crown">👑</span>GroceryGOD
+                        </th>
+                        <th class="header-competitor">Olio (UK)</th>
+                        <th class="header-competitor">Samsung Food</th>
+                        <th class="header-competitor">MyFitnessPal</th>
+                        <th class="header-competitor">Local Prep</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="feature-col">
+                            <span class="feature-icon">🎯</span>Core Goal
+                        </td>
+                        <td class="ggod-col">
+                            <div class="cell-content">
+                                <span class="highlight-text">Zero-Waste + BMR</span>
+                            </div>
+                        </td>
+                        <td class="competitor-col">
+                            <span class="regular-text">Waste Reduction</span>
+                        </td>
+                        <td class="competitor-col">
+                            <span class="regular-text">Recipe Planning</span>
+                        </td>
+                        <td class="competitor-col">
+                            <span class="regular-text">Weight Loss</span>
+                        </td>
+                        <td class="competitor-col">
+                            <span class="regular-text">Convenience</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="feature-col">
+                            <span class="feature-icon">📸</span>Inventory Source
+                        </td>
+                        <td class="ggod-col">
+                            <div class="cell-content">
+                                <span class="highlight-text">Visual AI + OCR</span>
+                            </div>
+                        </td>
+                        <td class="competitor-col">
+                            <span class="regular-text">Manual Only</span>
+                        </td>
+                        <td class="competitor-col">
+                            <span class="regular-text">Smart Appliances</span>
+                        </td>
+                        <td class="competitor-col">
+                            <span class="regular-text">Manual Entry</span>
+                        </td>
+                        <td class="competitor-col">
+                            <span class="regular-text">None</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="feature-col">
+                            <span class="feature-icon">🤝</span>P2P Sharing
+                        </td>
+                        <td class="ggod-col">
+                            <i class="material-icons check-icon">check_circle</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons check-icon">check_circle</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="feature-col">
+                            <span class="feature-icon">🌏</span>Regional Logic
+                        </td>
+                        <td class="ggod-col">
+                            <div class="cell-content">
+                                <span class="highlight-text">100% Deshi</span>
+                            </div>
+                        </td>
+                        <td class="competitor-col">
+                            <span class="regular-text">Low (Generic)</span>
+                        </td>
+                        <td class="competitor-col">
+                            <span class="regular-text">Medium (Global)</span>
+                        </td>
+                        <td class="competitor-col">
+                            <span class="regular-text">Low (US-Centric)</span>
+                        </td>
+                        <td class="competitor-col">
+                            <span class="regular-text">High</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="feature-col">
+                            <span class="feature-icon">💰</span>Budget Tiers
+                        </td>
+                        <td class="ggod-col">
+                            <i class="material-icons check-icon">check_circle</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="feature-col">
+                            <span class="feature-icon">👨‍👩‍👧‍👦</span>Family Scaling
+                        </td>
+                        <td class="ggod-col">
+                            <div class="cell-content">
+                                <span class="highlight-text">Mother Mode</span>
+                            </div>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="feature-col">
+                            <span class="feature-icon">♻️</span>Waste Recycling
+                        </td>
+                        <td class="ggod-col">
+                            <div class="cell-content">
+                                <span class="highlight-text">Resurrection AI</span>
+                            </div>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                        <td class="competitor-col">
+                            <i class="material-icons cross-icon">cancel</i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="navigation.js"></script>
+</body>
+</html>

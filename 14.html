@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Impact & ESG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-esg {
+            position: absolute;
+            font-size: 2.4rem;
+            opacity: 0.11;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .esg-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .esg-2 { top: 16%; right: 6%; animation-delay: 1.4s; }
+        .esg-3 { bottom: 14%; left: 8%; animation-delay: 2.8s; }
+        .esg-4 { bottom: 20%; right: 10%; animation-delay: 1.9s; }
+        .esg-5 { top: 48%; left: 2%; animation-delay: 1s; }
+        .esg-6 { top: 58%; right: 3%; animation-delay: 3.4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 2rem 3rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.95rem;
+            font-weight: 700;
+            color: #2E7D32;
+            text-shadow: 2px 2px 4px rgba(46, 125, 50, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+        }
+
+        .title-icon {
+            font-size: 2.15rem;
+            animation: earth-spin 10s linear infinite;
+        }
+
+        @keyframes earth-spin {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        .subtitle {
+            font-size: 0.92rem;
+            color: #388E3C;
+            font-weight: 600;
+            margin-top: 0.35rem;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.3rem;
+            max-height: calc(100% - 8rem);
+        }
+
+        /* Left Column - SDG Goals */
+        .sdg-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        /* SDG Card */
+        .sdg-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 14px;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 6px 24px rgba(46, 125, 50, 0.06);
+            padding: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sdg-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .sdg-card:hover::before {
+            left: 100%;
+        }
+
+        .sdg-card:hover {
+            transform: translateX(5px) scale(1.02);
+            box-shadow: 0 12px 32px rgba(46, 125, 50, 0.15);
+        }
+
+        .sdg-header {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin-bottom: 0.7rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid rgba(76, 175, 80, 0.25);
+        }
+
+        .sdg-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .sdg-12 .sdg-icon { background: linear-gradient(135deg, #FFD54F, #FFC107); }
+        .sdg-2 .sdg-icon { background: linear-gradient(135deg, #81C784, #66BB6A); }
+        .economic .sdg-icon { background: linear-gradient(135deg, #64B5F6, #42A5F5); }
+        .environmental .sdg-icon { background: linear-gradient(135deg, #AED581, #9CCC65); }
+
+        .sdg-title-group {
+            flex: 1;
+        }
+
+        .sdg-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #616161;
+            letter-spacing: 0.5px;
+        }
+
+        .sdg-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #2E7D32;
+            line-height: 1.2;
+        }
+
+        .sdg-content {
+            font-size: 0.78rem;
+            color: #424242;
+            line-height: 1.5;
+        }
+
+        .sdg-highlight {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(129, 199, 132, 0.1));
+            color: #1B5E20;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            margin: 0.15rem 0;
+        }
+
+        /* Right Column - Impact Infographic */
+        .impact-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Impact Infographic Container */
+        .impact-infographic {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 32px rgba(76, 175, 80, 0.08);
+            padding: 1.3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .infographic-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #2E7D32;
+            text-align: center;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Impact Stats Grid */
+        .impact-stats {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+        }
+
+        .impact-stat {
+            background: linear-gradient(135deg, rgba(129, 199, 132, 0.15), rgba(165, 214, 167, 0.08));
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            border-radius: 14px;
+            padding: 0.9rem 0.6rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact-stat::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .impact-stat:hover::after {
+            opacity: 1;
+        }
+
+        .impact-stat:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 10px 28px rgba(76, 175, 80, 0.25);
+            border-color: #66BB6A;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.35rem;
+            display: block;
+            animation: icon-bounce 3s ease-in-out infinite;
+        }
+
+        .stat-1 .stat-icon { animation-delay: 0s; }
+        .stat-2 .stat-icon { animation-delay: 0.5s; }
+        .stat-3 .stat-icon { animation-delay: 1s; }
+
+        @keyframes icon-bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.1); }
+        }
+
+        .stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1B5E20;
+            line-height: 1.2;
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            color: #388E3C;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .stat-sublabel {
+            font-size: 0.62rem;
+            color: #689F38;
+            margin-top: 0.15rem;
+        }
+
+        /* Households Badge */
+        .households-badge {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.15), rgba(66, 165, 245, 0.08));
+            border: 2px solid rgba(33, 150, 243, 0.35);
+            border-radius: 14px;
+            padding: 0.9rem;
+            text-align: center;
+        }
+
+        .badge-label {
+            font-size: 0.82rem;
+            color: #1565C0;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .badge-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0D47A1;
+        }
+
+        .badge-note {
+            font-size: 0.7rem;
+            color: #1976D2;
+            margin-top: 0.2rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 0.9rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 1.8rem 2.5rem; }
+            .main-title { font-size: 1.7rem; }
+            .stat-value { font-size: 1.3rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper { 
+                grid-template-columns: 1fr; 
+                gap: 1rem;
+            }
+            .impact-stats { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-esg esg-1">🌍</div>
+        <div class="floating-esg esg-2">♻️</div>
+        <div class="floating-esg esg-3">💚</div>
+        <div class="floating-esg esg-4">🌱</div>
+        <div class="floating-esg esg-5">🤝</div>
+        <div class="floating-esg esg-6">💰</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#2E7D32"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#388E3C"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#43A047"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#66BB6A"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">🌍</span>
+                Social Impact & ESG — Feeding the Future
+                <span class="title-icon">🌍</span>
+            </h1>
+            <p class="subtitle">Aligning Profit with Global Sustainability Goals (SDGs)</p>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            <!-- Left Column - SDG Goals -->
+            <div class="sdg-column">
+                <!-- SDG 12 -->
+                <div class="sdg-card sdg-12">
+                    <div class="sdg-header">
+                        <div class="sdg-icon">📊</div>
+                        <div class="sdg-title-group">
+                            <div class="sdg-number">SDG 12</div>
+                            <div class="sdg-title">Responsible Consumption</div>
+                        </div>
+                    </div>
+                    <div class="sdg-content">
+                        Direct quantifiable reduction in household food waste by up to <span class="sdg-highlight">30%</span> through intelligent inventory management and meal planning.
+                    </div>
+                </div>
+
+                <!-- SDG 2 -->
+                <div class="sdg-card sdg-2">
+                    <div class="sdg-header">
+                        <div class="sdg-icon">🍽️</div>
+                        <div class="sdg-title-group">
+                            <div class="sdg-number">SDG 2</div>
+                            <div class="sdg-title">Zero Hunger</div>
+                        </div>
+                    </div>
+                    <div class="sdg-content">
+                        C2C marketplace facilitates redistribution of excess food to those who need it, reducing local food insecurity through community sharing.
+                    </div>
+                </div>
+
+                <!-- Economic Empowerment -->
+                <div class="sdg-card economic">
+                    <div class="sdg-header">
+                        <div class="sdg-icon">💰</div>
+                        <div class="sdg-title-group">
+                            <div class="sdg-number">IMPACT</div>
+                            <div class="sdg-title">Economic Empowerment</div>
+                        </div>
+                    </div>
+                    <div class="sdg-content">
+                        Providing secondary income stream for "Home-Cooks" and "Small Scale Sellers" within the community marketplace ecosystem.
+                    </div>
+                </div>
+
+                <!-- Environmental Footprint -->
+                <div class="sdg-card environmental">
+                    <div class="sdg-header">
+                        <div class="sdg-icon">🌱</div>
+                        <div class="sdg-title-group">
+                            <div class="sdg-number">IMPACT</div>
+                            <div class="sdg-title">Environmental Footprint</div>
+                        </div>
+                    </div>
+                    <div class="sdg-content">
+                        Reducing carbon methane emissions from landfills by diverting domestic organic waste through smart consumption and community redistribution.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Impact Infographic -->
+            <div class="impact-column">
+                <!-- Impact Stats Visualization -->
+                <div class="impact-infographic">
+                    <h3 class="infographic-title">📈 Collective Impact of 1,000 MealMate Households</h3>
+                    
+                    <div class="impact-stats">
+                        <div class="impact-stat stat-1">
+                            <span class="stat-icon">🥗</span>
+                            <div class="stat-value">X tons</div>
+                            <div class="stat-label">Food Saved<br>Annually</div>
+                            <div class="stat-sublabel">From Waste</div>
+                        </div>
+
+                        <div class="impact-stat stat-2">
+                            <span class="stat-icon">🌿</span>
+                            <div class="stat-value">Y tons</div>
+                            <div class="stat-label">CO₂ Reduced</div>
+                            <div class="stat-sublabel">Emissions Cut</div>
+                        </div>
+
+                        <div class="impact-stat stat-3">
+                            <span class="stat-icon">💵</span>
+                            <div class="stat-value">$Z M</div>
+                            <div class="stat-label">Money Saved</div>
+                            <div class="stat-sublabel">Collectively</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Households Badge -->
+                <div class="households-badge">
+                    <div class="badge-label">🎯 Scaling Target</div>
+                    <div class="badge-value">1,000+ Households</div>
+                    <div class="badge-note">Creating measurable environmental & social impact</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Slide 14 / 20</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-esg');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg}')`;
+            });
+        });
+
+        // Add interactive effects to impact stats
+        document.querySelectorAll('.impact-stat').forEach(stat => {
+            stat.addEventListener('mouseenter', () => {
+                stat.style.borderColor = '#4CAF50';
+            });
+            stat.addEventListener('mouseleave', () => {
+                stat.style.borderColor = 'rgba(76, 175, 80, 0.3)';
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

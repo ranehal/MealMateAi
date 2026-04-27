@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The $1.1 Trillion Economic Drain</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-food {
+            position: absolute;
+            font-size: 2.8rem;
+            opacity: 0.12;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .food-1 { top: 10%; left: 4%; animation-delay: 0s; }
+        .food-2 { top: 18%; right: 6%; animation-delay: 1.5s; }
+        .food-3 { bottom: 15%; left: 8%; animation-delay: 2.5s; }
+        .food-4 { bottom: 22%; right: 10%; animation-delay: 1.8s; }
+        .food-5 { top: 50%; left: 2%; animation-delay: 0.8s; }
+        .food-6 { top: 60%; right: 3%; animation-delay: 3s; }
+        .food-7 { top: 35%; right: 15%; animation-delay: 2.2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-18px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 55px;
+            height: 55px;
+            opacity: 0.1;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 6%; left: 12%; transform: rotate(-25deg); }
+        .leaf-2 { top: 28%; right: 8%; transform: rotate(40deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 18%; left: 6%; transform: rotate(25deg); animation-delay: 2.3s; }
+        .leaf-4 { bottom: 10%; right: 16%; transform: rotate(-40deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 12deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 2.5rem 3.5rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #C62828;
+            text-shadow: 2px 2px 4px rgba(198, 40, 40, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .title-icon {
+            font-size: 2.6rem;
+            animation: pulse-warning 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-warning {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: #D32F2F;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr;
+            gap: 1.5rem;
+            max-height: calc(100% - 9rem);
+        }
+
+        /* Glass Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 
+                0 8px 32px rgba(198, 40, 40, 0.06),
+                inset 0 2px 0 rgba(255, 255, 255, 0.9);
+            padding: 1.8rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        /* Hero Stats Card - Spans full width */
+        .hero-stats {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, rgba(198, 40, 40, 0.1) 0%, rgba(211, 47, 47, 0.05) 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 2px solid rgba(198, 40, 40, 0.2);
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #B71C1C;
+            display: block;
+            margin-bottom: 0.3rem;
+            animation: countUp 2s ease-out;
+        }
+
+        .stat-label {
+            font-size: 0.88rem;
+            color: #D32F2F;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* Problem Cards */
+        .problem-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid rgba(198, 40, 40, 0.15);
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #C62828;
+        }
+
+        .card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .content-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            padding: 0.9rem;
+            background: rgba(255, 235, 238, 0.4);
+            border-radius: 12px;
+            border-left: 3px solid #EF5350;
+            transition: all 0.3s ease;
+        }
+
+        .content-item:hover {
+            background: rgba(255, 235, 238, 0.65);
+            transform: translateX(5px);
+        }
+
+        .item-bullet {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .item-text {
+            flex: 1;
+            font-size: 0.92rem;
+            line-height: 1.55;
+            color: #424242;
+        }
+
+        .item-text strong {
+            color: #C62828;
+            font-weight: 600;
+        }
+
+        .highlight-value {
+            color: #D84315;
+            font-weight: 700;
+            font-size: 1em;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 1.2rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* Responsive adjustments for 16:9 */
+        @media (max-width: 1366px) {
+            .main-container { padding: 2rem 2.8rem; }
+            .main-title { font-size: 2rem; }
+            .stat-number { font-size: 1.7rem; }
+            .glass-card { padding: 1.5rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper { 
+                grid-template-columns: 1fr; 
+                grid-template-rows: auto auto auto auto;
+            }
+            .hero-stats { grid-column: 1; }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-food food-1">💸</div>
+        <div class="floating-food food-2">🗑️</div>
+        <div class="floating-food food-3">📉</div>
+        <div class="floating-food food-4">🥺</div>
+        <div class="floating-food food-5">⚠️</div>
+        <div class="floating-food food-6">💰</div>
+        <div class="floating-food food-7">🌍</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -25deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#C62828"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 40deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#D32F2F"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 25deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#E53935"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -40deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#EF5350"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">🚨</span>
+                The $1.1 Trillion Economic Drain
+                <span class="title-icon">🚨</span>
+            </h1>
+            <p class="subtitle">Global Food Inefficiency is a Financial and Environmental Crisis</p>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            <!-- Hero Statistics Row -->
+            <div class="hero-stats glass-card">
+                <div class="stat-box">
+                    <span class="stat-icon">🌍</span>
+                    <span class="stat-number">$1.1T</span>
+                    <span class="stat-label">Annual Global Economic Loss from Food Waste</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-icon">⚖️</span>
+                    <span class="stat-number">1.05B</span>
+                    <span class="stat-label">Tonnes of Food Wasted Annually Worldwide</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-icon">🏠</span>
+                    <span class="stat-number">25-30%</span>
+                    <span class="stat-label">Household Grocery Budget Lost Monthly to Spoilage</span>
+                </div>
+            </div>
+
+            <!-- Problem Card 1: Economic Leak -->
+            <div class="glass-card problem-card">
+                <div class="card-header">
+                    <span class="card-icon">💸</span>
+                    <h2 class="card-title">The Economic Leak</h2>
+                </div>
+                <div class="card-content">
+                    <div class="content-item">
+                        <span class="item-bullet">📊</span>
+                        <div class="item-text">
+                            <strong>Global Waste:</strong> <span class="highlight-value">1.05 billion tonnes</span> of food wasted annually — equivalent to <span class="highlight-value">$1.1 Trillion</span> economic loss
+                        </div>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🏠</span>
+                        <div class="item-text">
+                            <strong>Household Impact:</strong> Average urban household "throws away" <span class="highlight-value">25%-30%</span> of grocery budget every month due to spoilage and poor planning
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Problem Card 2: Inflation & Sustainability -->
+            <div class="glass-card problem-card">
+                <div class="card-header">
+                    <span class="card-icon">📈</span>
+                    <h2 class="card-title">Inflation Crisis & Sustainability Gap</h2>
+                </div>
+                <div class="card-content">
+                    <div class="content-item">
+                        <span class="item-bullet">🌡️</span>
+                        <div class="item-text">
+                            <strong>The Inflation Crisis (Regional):</strong> In markets like Bangladesh, food inflation is volatile at <span class="highlight-value">9%-12%+</span>. Households spending more for less value with zero tools to track local bazaar price fluctuations in real-time
+                        </div>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🌱</span>
+                        <div class="item-text">
+                            <strong>The Sustainability Gap:</strong> Domestic food waste responsible for <span class="highlight-value">8%</span> of global greenhouse gas emissions. Reducing waste isn't just a "green" goal — it's a massive financial recovery opportunity
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Slide 2 / 20</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const foods = document.querySelectorAll('.floating-food');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            foods.forEach((food, index) => {
+                const speed = (index + 1) * 6;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                food.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg'})`;
+            });
+        });
+
+        // Animate stat numbers on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                stat.style.animation = 'none';
+                setTimeout(() => {
+                    stat.style.animation = 'countUp 2s ease-out';
+                }, 100);
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

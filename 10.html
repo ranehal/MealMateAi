@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Roadmap & Seed Ask</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-finance {
+            position: absolute;
+            font-size: 2.4rem;
+            opacity: 0.11;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .fin-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .fin-2 { top: 16%; right: 6%; animation-delay: 1.4s; }
+        .fin-3 { bottom: 14%; left: 8%; animation-delay: 2.8s; }
+        .fin-4 { bottom: 20%; right: 10%; animation-delay: 1.9s; }
+        .fin-5 { top: 48%; left: 2%; animation-delay: 1s; }
+        .fin-6 { top: 58%; right: 3%; animation-delay: 3.4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 2rem 3rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.95rem;
+            font-weight: 700;
+            color: #E65100;
+            text-shadow: 2px 2px 4px rgba(230, 81, 0, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+        }
+
+        .title-icon {
+            font-size: 2.15rem;
+            animation: money-pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes money-pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.12) rotate(-5deg); }
+        }
+
+        .subtitle {
+            font-size: 0.92rem;
+            color: #F57C00;
+            font-weight: 600;
+            margin-top: 0.35rem;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.3rem;
+            max-height: calc(100% - 8rem);
+        }
+
+        /* Left Column - Financial Details */
+        .finance-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 6px 24px rgba(230, 81, 0, 0.06);
+            padding: 1.15rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(230, 81, 0, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin-bottom: 0.85rem;
+            padding-bottom: 0.65rem;
+            border-bottom: 2px solid rgba(230, 81, 0, 0.18);
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #E65100;
+        }
+
+        /* Projections Grid */
+        .projections-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .projection-item {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 193, 7, 0.05));
+            border-radius: 11px;
+            padding: 0.85rem;
+            border-left: 4px solid #FF9800;
+            transition: all 0.3s ease;
+        }
+
+        .projection-item:hover {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.18), rgba(255, 193, 7, 0.1));
+            transform: translateX(4px);
+        }
+
+        .projection-label {
+            font-size: 0.72rem;
+            color: #E65100;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.35rem;
+        }
+
+        .projection-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #BF360C;
+            line-height: 1.2;
+        }
+
+        .projection-detail {
+            font-size: 0.74rem;
+            color: #616161;
+            margin-top: 0.25rem;
+        }
+
+        /* Funding Ask Card */
+        .funding-card {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.12), rgba(129, 199, 132, 0.06));
+            border: 2.5px solid rgba(76, 175, 80, 0.35);
+        }
+
+        .ask-amount {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2E7D32;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .allocation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .allocation-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.82rem;
+            line-height: 1.45;
+            color: #424242;
+            padding: 0.55rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 9px;
+            transition: all 0.3s ease;
+        }
+
+        .allocation-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(4px);
+        }
+
+        .alloc-percent {
+            font-weight: 700;
+            color: #2E7D32;
+            min-width: fit-content;
+            font-size: 0.88rem;
+        }
+
+        .alloc-desc {
+            flex: 1;
+        }
+
+        /* Right Column - Visualizations */
+        .visual-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Pie Chart */
+        .pie-chart-container {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 32px rgba(76, 175, 80, 0.08);
+            padding: 1.3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .chart-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2E7D32;
+            text-align: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .pie-chart {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        .pie-chart:hover {
+            transform: scale(1.08);
+        }
+
+        .pie-segment {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0 100%);
+            transition: all 0.3s ease;
+        }
+
+        .pie-segment:hover {
+            filter: brightness(1.15);
+        }
+
+        .segment-rd { 
+            background: linear-gradient(135deg, #66BB6A, #4CAF50);
+            clip-path: polygon(50% 50%, 100% 0, 100% 70%, 30% 100%);
+        }
+        
+        .segment-data { 
+            background: linear-gradient(135deg, #42A5F5, #2196F3);
+            clip-path: polygon(50% 50%, 30% 100%, 0 90%, 0 35%, 40% 0);
+        }
+        
+        .segment-marketing { 
+            background: linear-gradient(135deg, #AB47BC, #9C27B0);
+            clip-path: polygon(50% 50%, 40% 0, 100% 0, 100% 70%);
+        }
+
+        .pie-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85px;
+            height: 85px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .center-label {
+            font-size: 0.7rem;
+            color: #616161;
+            font-weight: 600;
+        }
+
+        .center-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2E7D32;
+        }
+
+        .legend-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            width: 100%;
+            margin-top: 0.8rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.7rem;
+            color: #424242;
+            justify-content: center;
+        }
+
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+        }
+
+        /* Pitch Script Quote */
+        .pitch-quote {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(66, 165, 245, 0.05));
+            border: 2px solid rgba(33, 150, 243, 0.3);
+            border-radius: 14px;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .quote-icon {
+            font-size: 2rem;
+            color: #1976D2;
+            opacity: 0.3;
+            position: absolute;
+            top: 0.5rem;
+            left: 0.8rem;
+        }
+
+        .quote-text {
+            font-size: 0.8rem;
+            color: #1565C0;
+            line-height: 1.55;
+            font-style: italic;
+            padding-left: 1.8rem;
+            font-weight: 500;
+        }
+
+        .quote-highlight {
+            color: #D84315;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 0.9rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 1.8rem 2.5rem; }
+            .main-title { font-size: 1.7rem; }
+            .ask-amount { font-size: 1.7rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper { 
+                grid-template-columns: 1fr; 
+                gap: 1rem;
+            }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-finance fin-1">💰</div>
+        <div class="floating-finance fin-2">📊</div>
+        <div class="floating-finance fin-3">📈</div>
+        <div class="floating-finance fin-4">💵</div>
+        <div class="floating-finance fin-5">🎯</div>
+        <div class="floating-finance fin-6">🚀</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#E65100"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#F57C00"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#FF9800"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#FFA726"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">💰</span>
+                Financial Roadmap & Seed Ask
+                <span class="title-icon">💰</span>
+            </h1>
+            <p class="subtitle">Scalability to BDT 15m+ ARR</p>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            <!-- Left Column - Financial Data -->
+            <div class="finance-column">
+                <!-- Projections Card -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-icon">📈</span>
+                        <h3 class="card-title">Growth Projections</h3>
+                    </div>
+                    
+                    <div class="projections-grid">
+                        <div class="projection-item">
+                            <div class="projection-label">Year 1 Target</div>
+                            <div class="projection-value">15K Users</div>
+                            <div class="projection-detail">$120K Revenue<br>(Subscriptions Focus)</div>
+                        </div>
+
+                        <div class="projection-item">
+                            <div class="projection-label">Year 3 Target</div>
+                            <div class="projection-value">150K Users</div>
+                            <div class="projection-detail">$1.8M Revenue<br>(Commissions + Marketplace)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Traction -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-icon">✅</span>
+                        <h3 class="card-title">Current Traction</h3>
+                    </div>
+                    <div style="text-align: center; padding: 0.8rem;">
+                        <div style="font-size: 0.82rem; color: #616161; margin-bottom: 0.4rem;">MVP Testing Phase</div>
+                        <div style="font-size: 1.3rem; font-weight: 700; color: #2E7D32; font-family: 'Poppins', sans-serif;">
+                            🚀 Building Momentum
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seed Ask Card -->
+                <div class="glass-card funding-card">
+                    <div class="card-header">
+                        <span class="card-icon">🎯</span>
+                        <h3 class="card-title">The Ask: Seed Funding</h3>
+                    </div>
+                    
+                    <div class="ask-amount">
+                        <span>$250,000</span>
+                    </div>
+
+                    <div class="allocation-list">
+                        <div class="allocation-item">
+                            <span class="alloc-percent">40%</span>
+                            <div class="alloc-desc"><strong>R&D & AI:</strong> Computer Vision / Receipt OCR refinement</div>
+                        </div>
+                        <div class="allocation-item">
+                            <span class="alloc-percent">30%</span>
+                            <div class="alloc-desc"><strong>Data Acquisition:</strong> Regional ingredient/price database</div>
+                        </div>
+                        <div class="allocation-item">
+                            <span class="alloc-percent">30%</span>
+                            <div class="alloc-desc"><strong>Marketing & GTM:</strong> CAC target &lt;$2.50/user</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Visualizations -->
+            <div class="visual-column">
+                <!-- Pie Chart -->
+                <div class="pie-chart-container">
+                    <h3 class="chart-title">💡 Use of Funds Allocation</h3>
+                    
+                    <div class="pie-chart">
+                        <div class="pie-segment segment-rd"></div>
+                        <div class="pie-segment segment-data"></div>
+                        <div class="pie-segment segment-marketing"></div>
+                        
+                        <div class="pie-center">
+                            <div class="center-label">TOTAL</div>
+                            <div class="center-value">$250K</div>
+                        </div>
+                    </div>
+
+                    <div class="legend-container">
+                        <div class="legend-item">
+                            <div class="legend-color segment-rd"></div>
+                            <span>R&D (40%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color segment-data"></div>
+                            <span>Data (30%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color segment-marketing"></div>
+                            <span>GTM (30%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pitch Script Quote -->
+                <div class="pitch-quote">
+                    <span class="quote-icon">"</span>
+                    <div class="quote-text">
+                        Investors aren't looking for another grocery app. They're looking for the <span class="quote-highlight">'Brain'</span> that controls the grocery apps. Whoever controls the decision of what to eat tonight controls the entire <span class="quote-highlight">$1 trillion food supply chain</span>. MealMate AI is that brain. Join us.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Slide 10 / 20</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-finance');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg'})`;
+            });
+        });
+
+        // Add hover effects to pie segments
+        document.querySelectorAll('.pie-segment').forEach(segment => {
+            segment.addEventListener('mouseenter', () => {
+                segment.style.filter = 'brightness(1.2)';
+            });
+            segment.addEventListener('mouseleave', () => {
+                segment.style.filter = 'brightness(1)';
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

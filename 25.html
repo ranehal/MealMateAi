@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - MealMate AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-thanks {
+            position: absolute;
+            font-size: 2.4rem;
+            opacity: 0.12;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .thanks-1 { top: 10%; left: 5%; animation-delay: 0s; }
+        .thanks-2 { top: 15%; right: 7%; animation-delay: 1.3s; }
+        .thanks-3 { bottom: 18%; left: 9%; animation-delay: 2.6s; }
+        .thanks-4 { bottom: 22%; right: 11%; animation-delay: 1.8s; }
+        .thanks-5 { top: 50%; left: 3%; animation-delay: 0.9s; }
+        .thanks-6 { top: 60%; right: 4%; animation-delay: 3.2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 52px;
+            height: 52px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 6%; left: 14%; transform: rotate(-28deg); }
+        .leaf-2 { top: 28%; right: 9%; transform: rotate(45deg); animation-delay: 1.3s; }
+        .leaf-3 { bottom: 19%; left: 7%; transform: rotate(26deg); animation-delay: 2.5s; }
+        .leaf-4 { bottom: 11%; right: 17%; transform: rotate(-45deg); animation-delay: 1.8s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 12deg)) scale(1.05); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 2rem 3rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #1565C0;
+            text-shadow: 2px 2px 4px rgba(21, 101, 192, 0.08);
+            letter-spacing: -0.5px;
+            margin-bottom: 0.4rem;
+            animation: title-bounce 2.5s ease-in-out infinite;
+        }
+
+        @keyframes title-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: #1976D2;
+            font-weight: 500;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-height: calc(100% - 10rem);
+            align-items: center;
+        }
+
+        /* Left Column - Message */
+        .message-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .tagline {
+            display: inline-block;
+            background: linear-gradient(135deg, #66BB6A, #81C784);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.25);
+        }
+
+        .core-message {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 
+                0 12px 40px rgba(33, 150, 243, 0.12),
+                inset 0 2px 0 rgba(255, 255, 255, 0.95),
+                0 20px 40px rgba(76, 175, 80, 0.08);
+            padding: 2rem 2.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .core-message::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(76, 175, 80, 0.15), transparent);
+            animation: pulse-ring 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-ring {
+            0%, 100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        }
+
+        .core-message:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 16px 48px rgba(33, 150, 243, 0.18),
+                inset 0 2px 0 rgba(255, 255, 255, 0.95),
+                0 24px 48px rgba(76, 175, 80, 0.12);
+        }
+
+        .message-text {
+            font-size: 1.35rem;
+            color: #1B5E20;
+            font-weight: 600;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .highlight {
+            color: #E65100;
+            font-weight: 700;
+        }
+
+        /* Right Column - Stats & QR */
+        .stats-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            width: 100%;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 28px rgba(33, 150, 243, 0.08);
+            padding: 1.3rem 1rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 14px 36px rgba(33, 150, 243, 0.18);
+        }
+
+        .stat-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            animation: icon-float 3s ease-in-out infinite;
+        }
+
+        .stat-icon.foods { animation-delay: 0s; }
+        .stat-icon.pilot { animation-delay: 0.5s; }
+        .stat-icon.launch { animation-delay: 1s; }
+
+        @keyframes icon-float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.1); }
+        }
+
+        .stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1565C0;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.82rem;
+            color: #1976D2;
+            font-weight: 500;
+            margin-top: 0.3rem;
+        }
+
+        /* QR Code Section */
+        .qr-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 243, 224, 0.12));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 2.5px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 
+                0 12px 40px rgba(33, 150, 243, 0.12),
+                inset 0 2px 0 rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .qr-section:hover {
+            transform: scale(1.02);
+            box-shadow: 0 16px 44px rgba(33, 150, 243, 0.2);
+        }
+
+        .qr-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0D47A1;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .qr-code-container {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            display: inline-block;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .qr-code-image {
+            width: 160px;
+            height: 160px;
+            display: block;
+        }
+
+        .qr-hint {
+            font-size: 0.78rem;
+            color: #558B2F;
+            margin-top: 0.8rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.88rem;
+            color: #424242;
+            font-weight: 500;
+        }
+
+        .contact-icon {
+            font-size: 1.2rem;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #558B2F;
+        }
+
+        /* Responsive */
+        @media (max-width: 1366px) {
+            .main-container { padding: 1.6rem 2.5rem; }
+            .main-title { font-size: 2rem; }
+            .message-text { font-size: 1.2rem; }
+            .stat-value { font-size: 1.5rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper { 
+                grid-template-columns: 1fr; 
+                gap: 1.5rem;
+            }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-thanks thanks-1">🙏</div>
+        <div class="floating-thanks thanks-2">🎉</div>
+        <div class="floating-thanks thanks-3">💚</div>
+        <div class="floating-thanks thanks-4">🌟</div>
+        <div class="floating-thanks thanks-5">📱</div>
+        <div class="floating-thanks thanks-6">✨</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -28deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1565C0"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 45deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1976D2"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1E88E5"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -48deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#42A5F5"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                🙏 Thank You! 🎉
+            </h1>
+            <p class="subtitle">
+                <span class="tagline">MEALMATE AI</span> isn't just an app; it's a digital homemaker 🏠
+            </p>
+        </div>
+
+        <!-- Content -->
+        <div class="content-wrapper">
+            <!-- Left Column - Core Message -->
+            <div class="message-column">
+                <div class="core-message">
+                    <div class="message-text">
+                        We are saving the <span class="highlight">budget</span>, the <span class="highlight">body</span>, and the <span class="highlight">biosphere</span>—one fridge at a time. 🌍
+                    </div>
+                    <br><br>
+                    <div style="font-size: 1.1rem; color: #388E3C; font-weight: 500; margin-top: 0.5rem;">
+                        Join us in building a world where no food goes to waste.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Stats & QR -->
+            <div class="stats-column">
+                <!-- Impact Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon foods">🥗</div>
+                        <div class="stat-value">50K+</div>
+                        <div class="stat-label">Food Items<br>Database</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon pilot">📍</div>
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Pilot Areas<br>Covered</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon launch">🚀</div>
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Launch Year</div>
+                    </div>
+                </div>
+
+                <!-- QR Code Section -->
+                <div class="qr-section">
+                    <div class="qr-title">
+                        📱 Scan to Join Beta!
+                        <br>
+                        Be part of the yummy revolution 🚀
+                    </div>
+                    
+                    <div class="qr-code-container">
+                        <img src="https://i.ibb.co.com/wrQ4549G/download.png" 
+                             alt="QR Code for MealMate AI Beta" 
+                             class="qr-code-image"
+                             style="width: 140px; height: 140px;">
+                    </div>
+                    
+                    <div class="qr-hint">
+                        Scan with your phone camera or any QR reader<br>
+                        <strong>No app download required!</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="contact-icon">📧</span>
+                    Questions?
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">💬</span>
+                    Feedback welcome
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">🤝</span>
+                    Let's build the future of food together!
+                </div>
+            </div>
+            
+            <div class="page-number">Slide 23 / 23 • Thank You!</div>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-thanks');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg'})`;
+            });
+        });
+
+        // Add hover effects to stat cards
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderColor = '#42A5F5';
+                card.style.boxShadow = '0 16px 40px rgba(66, 165, 245, 0.3)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = 'rgba(255, 255, 255, 0.85)';
+                card.style.boxShadow = '0 8px 28px rgba(33, 150, 243, 0.08)';
+            });
+        });
+
+        // Add hover effect to core message
+        const messageEl = document.querySelector('.core-message');
+        if (messageEl) {
+            messageEl.addEventListener('mouseenter', () => {
+                messageEl.style.borderLeftColor = '#43A047';
+            });
+            messageEl.addEventListener('mouseleave', () => {
+                messageEl.style.borderLeftColor = '#66BB6A';
+            });
+        }
+
+        // Add hover effect to QR section
+        const qrSection = document.querySelector('.qr-section');
+        if (qrSection) {
+            qrSection.addEventListener('mouseenter', () => {
+                qrSection.style.borderColor = '#FF6F00';
+            });
+            qrSection.addEventListener('mouseleave', () => {
+                qrSection.style.borderColor = 'rgba(255, 243, 224, 0.9)';
+            });
+        }
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

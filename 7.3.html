@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Game Plan - SWOT Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-strategic {
+            position: absolute;
+            font-size: 2.3rem;
+            opacity: 0.11;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .strat-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .strat-2 { top: 16%; right: 6%; animation-delay: 1.4s; }
+        .strat-3 { bottom: 14%; left: 8%; animation-delay: 2.8s; }
+        .strat-4 { bottom: 20%; right: 10%; animation-delay: 1.9s; }
+        .strat-5 { top: 48%; left: 2%; animation-delay: 1s; }
+        .strat-6 { top: 58%; right: 3%; animation-delay: 3.4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 1.8rem 2.8rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 0.85rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.95rem;
+            font-weight: 700;
+            color: #1565C0;
+            text-shadow: 2px 2px 4px rgba(21, 101, 192, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+        }
+
+        .title-icon {
+            font-size: 2.15rem;
+            animation: target-pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes target-pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.08) rotate(-5deg); }
+            75% { transform: scale(1.08) rotate(5deg); }
+        }
+
+        .subtitle {
+            font-size: 0.92rem;
+            color: #1976D2;
+            font-weight: 600;
+            margin-top: 0.35rem;
+        }
+
+        /* Content Area - SWOT Grid */
+        .swot-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 1rem;
+            max-height: calc(100% - 7.5rem);
+        }
+
+        /* SWOT Quadrant Cards */
+        .swot-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 6px 28px rgba(33, 150, 243, 0.08);
+            padding: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .swot-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .swot-card:hover::before {
+            left: 100%;
+        }
+
+        .swot-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 14px 36px rgba(33, 150, 243, 0.15);
+        }
+
+        /* Quadrant Headers */
+        .quadrant-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.65rem;
+            border-bottom: 2.5px solid;
+        }
+
+        .quadrant-icon-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .quadrant-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .quadrant-label {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .quadrant-badge {
+            font-size: 0.72rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Strengths Card */
+        .strengths-card {
+            border-color: rgba(76, 175, 80, 0.35);
+        }
+        .strengths-card .quadrant-header {
+            border-bottom-color: rgba(76, 175, 80, 0.25);
+        }
+        .strengths-card .quadrant-label { color: #2E7D32; }
+        .strengths-card .quadrant-badge {
+            background: linear-gradient(135deg, #66BB6A, #81C784);
+            color: white;
+        }
+
+        /* Weaknesses Card */
+        .weaknesses-card {
+            border-color: rgba(255, 152, 0, 0.35);
+        }
+        .weaknesses-card .quadrant-header {
+            border-bottom-color: rgba(255, 152, 0, 0.25);
+        }
+        .weaknesses-card .quadrant-label { color: #E65100; }
+        .weaknesses-card .quadrant-badge {
+            background: linear-gradient(135deg, #FFA726, #FFB74D);
+            color: white;
+        }
+
+        /* Opportunities Card */
+        .opportunities-card {
+            border-color: rgba(76, 175, 80, 0.35);
+        }
+        .opportunities-card .quadrant-header {
+            border-bottom-color: rgba(76, 175, 80, 0.25);
+        }
+        .opportunities-card .quadrant-label { color: #2E7D32; }
+        .opportunities-card .quadrant-badge {
+            background: linear-gradient(135deg, #43A047, #66BB6A);
+            color: white;
+        }
+
+        /* Threats Card */
+        .threats-card {
+            border-color: rgba(198, 40, 40, 0.35);
+        }
+        .threats-card .quadrant-header {
+            border-bottom-color: rgba(198, 40, 40, 0.25);
+        }
+        .threats-card .quadrant-label { color: #C62828; }
+        .threats-card .quadrant-badge {
+            background: linear-gradient(135deg, #EF5350, #F44336);
+            color: white;
+        }
+
+        /* Content Items */
+        .swot-items {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+
+        .swot-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 0.6rem 0.7rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 0.78rem;
+            line-height: 1.45;
+        }
+
+        .swot-item:hover {
+            transform: translateX(5px);
+            filter: brightness(1.08);
+        }
+
+        .item-icon {
+            font-size: 1.15rem;
+            flex-shrink: 0;
+            margin-top: 0.05rem;
+        }
+
+        .item-text {
+            flex: 1;
+            color: #424242;
+        }
+
+        .item-highlight {
+            font-weight: 600;
+        }
+
+        /* Specific Item Styles */
+        .strength-item {
+            background: linear-gradient(135deg, rgba(232, 245, 233, 0.5), rgba(200, 230, 201, 0.3));
+            border-left: 3px solid #4CAF50;
+        }
+
+        .strength-item:hover {
+            background: linear-gradient(135deg, rgba(200, 230, 201, 0.6), rgba(165, 214, 167, 0.4));
+            border-left-color: #43A047;
+        }
+
+        .weakness-item {
+            background: linear-gradient(135deg, rgba(255, 243, 224, 0.4), rgba(255, 235, 205, 0.25));
+            border-left: 3px solid #FF9800;
+        }
+
+        .weakness-item:hover {
+            background: linear-gradient(135deg, rgba(255, 235, 205, 0.55), rgba(255, 224, 178, 0.35));
+            border-left-color: #FFA726;
+        }
+
+        .opportunity-item {
+            background: linear-gradient(135deg, rgba(232, 245, 233, 0.4), rgba(200, 230, 201, 0.25));
+            border-left: 3px solid #66BB6A;
+        }
+
+        .opportunity-item:hover {
+            background: linear-gradient(135deg, rgba(200, 230, 201, 0.5), rgba(165, 214, 167, 0.35));
+            border-left-color: #43A047;
+        }
+
+        .threat-item {
+            background: linear-gradient(135deg, rgba(239, 83, 80, 0.35), rgba(229, 115, 115, 0.2));
+            border-left: 3px solid #EF5350;
+        }
+
+        .threat-item:hover {
+            background: linear-gradient(135deg, rgba(229, 115, 115, 0.45), rgba(217, 119, 103, 0.3));
+            border-left-color: #F44336;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 0.8rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 1.6rem 2.3rem; }
+            .main-title { font-size: 1.7rem; }
+            .swot-item { font-size: 0.72rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .swot-wrapper { 
+                grid-template-columns: 1fr; 
+                gap: 0.8rem;
+            }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-strategic strat-1">🎯</div>
+        <div class="floating-strategic strat-2">🎯</div>
+        <div class="floating-strategic strat-3">📊</div>
+        <div class="floating-strategic strat-4">⚔️</div>
+        <div class="floating-strategic strat-5">💪</div>
+        <div class="floating-strategic strat-6">🌟</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1565C0"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1976D2"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1E88E5"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#42A5F5"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">🎯</span>
+                Strategic Game Plan — SWOT Analysis
+                <span class="title-icon">🎯</span>
+            </h1>
+            <p class="subtitle">Deep-dive Assessment for GroceryGOD's Market Position</p>
+        </div>
+
+        <!-- SWOT Grid -->
+        <div class="swot-wrapper">
+            <!-- STRENGTHS -->
+            <div class="swot-card strengths-card">
+                <div class="quadrant-header">
+                    <div class="quadrant-icon-wrapper">
+                        <span class="quadrant-icon">💪</span>
+                        <h2 class="quadrant-label">STRENGTHS</h2>
+                    </div>
+                    <span class="quadrant-badge">COMPETITIVE ADVANTAGE</span>
+                </div>
+                
+                <div class="swot-items">
+                    <div class="swot-item strength-item">
+                        <span class="item-icon">✅</span>
+                        <div class="item-text"><span class="item-highlight">Deshi Dataset:</span> AI knows Puti Mach, Sajne Data, Lau Shak 🐟</div>
+                    </div>
+                    
+                    <div class="swot-item strength-item">
+                        <span class="item-icon">✅</span>
+                        <div class="item-text"><span class="item-highlight">Save Gene:</span> Cultural hook for financial discipline 💰</div>
+                    </div>
+                    
+                    <div class="swot-item strength-item">
+                        <span class="item-icon">✅</span>
+                        <div class="item-text"><span class="item-highlight">Mother Mode:</span> First-mover in joint family solutions 👨‍👩‍👧‍👦</div>
+                    </div>
+                    
+                    <div class="swot-item strength-item">
+                        <span class="item-icon">✅</span>
+                        <div class="item-text"><span class="item-highlight">Vertical Integration:</span> Chaldal/Pandamart API access 🛒</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEAKNESSES -->
+            <div class="swot-card weaknesses-card">
+                <div class="quadrant-header">
+                    <div class="quadrant-icon-wrapper">
+                        <span class="quadrant-icon">⚠️</span>
+                        <h2 class="quadrant-label">WEAKNESSES</h2>
+                    </div>
+                    <span class="quadrant-badge">IMPROVEMENT AREAS</span>
+                </div>
+                
+                <div class="swot-items">
+                    <div class="swot-item weakness-item">
+                        <span class="item-icon">⚠️</span>
+                        <div class="item-text"><span class="item-highlight">Shadow Inventory:</span> Opaque containers, Tiffin carriers 📦</div>
+                    </div>
+                    
+                    <div class="swot-item weakness-item">
+                        <span class="item-icon">⚠️</span>
+                        <div class="item-text"><span class="item-highlight">5G/Wi-Fi Gaps:</span> Kitchen dead zones in Dhaka apartments 📡</div>
+                    </div>
+                    
+                    <div class="swot-item weakness-item">
+                        <span class="item-icon">⚠️</span>
+                        <div class="item-text"><span class="item-highlight">Cold-Start Problem:</span> Needs thousands of local fridge photos 📸</div>
+                    </div>
+                    
+                    <div class="swot-item weakness-item">
+                        <span class="item-icon">⚠️</span>
+                        <div class="item-text"><span class="item-highlight">Friction Barrier:</span> Scanning feels like extra chore 😓</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPPORTUNITIES -->
+            <div class="swot-card opportunities-card">
+                <div class="quadrant-header">
+                    <div class="quadrant-icon-wrapper">
+                        <span class="quadrant-icon">🌟</span>
+                        <h2 class="quadrant-label">OPPORTUNITIES</h2>
+                    </div>
+                    <span class="quadrant-badge">GROWTH POTENTIAL</span>
+                </div>
+                
+                <div class="swot-items">
+                    <div class="swot-item opportunity-item">
+                        <span class="item-icon">🌿</span>
+                        <div class="item-text"><span class="item-highlight">Carbon Credits:</span> Waste saved as tradable offsets 🌍</div>
+                    </div>
+                    
+                    <div class="swot-item opportunity-item">
+                        <span class="item-icon">📊</span>
+                        <div class="item-text"><span class="item-highlight">FMCG Insights:</span> Real-time fridge data for brands 📊</div>
+                    </div>
+                    
+                    <div class="swot-item opportunity-item">
+                        <span class="item-icon">👵</span>
+                        <div class="item-text"><span class="item-highlight">Silver Economy:</span> Remote monitor for elderly parents 👵</div>
+                    </div>
+                    
+                    <div class="swot-item opportunity-item">
+                        <span class="item-icon">🗣️</span>
+                        <div class="item-text"><span class="item-highlight">Voice AI:</span> Dialect version for rural cooks 🗣️</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THREATS -->
+            <div class="swot-card threats-card">
+                <div class="quadrant-header">
+                    <div class="quadrant-icon-wrapper">
+                        <span class="quadrant-icon">🛡️</span>
+                        <h2 class="quadrant-label">THREATS</h2>
+                    </div>
+                    <span class="quadrant-badge">RISK FACTORS</span>
+                </div>
+                
+                <div class="swot-items">
+                    <div class="swot-item threat-item">
+                        <span class="item-icon">📱</span>
+                        <div class="item-text"><span class="item-highlight">Platform Play:</span> Samsung/Walton Smart Fridges 🧊</div>
+                    </div>
+                    
+                    <div class="swot-item threat-item">
+                        <span class="item-icon">🚫</span>
+                        <div class="item-text"><span class="item-highlight">Food Safety:</span> P2P poisoning & BFSA crackdown 🚫</div>
+                    </div>
+                    
+                    <div class="swot-item threat-item">
+                        <span class="item-icon">💸</span>
+                        <div class="item-text"><span class="item-highlight">Inflation Pressure:</span> Cheapest calories over nutrition 💸</div>
+                    </div>
+                    
+                    <div class="swot-item threat-item">
+                        <span class="item-icon">🔒</span>
+                        <div class="item-text"><span class="item-highlight">Privacy Concerns:</span> Data leak of health/location info 🔒</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Strategic Game Plan • Slide 22 / 22</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-strategic');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg'})`;
+            });
+        });
+
+        // Add interactive hover effects to SWOT cards
+        document.querySelectorAll('.swot-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.zIndex = '20';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.zIndex = '10';
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

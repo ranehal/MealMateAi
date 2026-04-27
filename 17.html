@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Economics & Efficiency Metrics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-econ {
+            position: absolute;
+            font-size: 2.4rem;
+            opacity: 0.11;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .econ-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .econ-2 { top: 16%; right: 6%; animation-delay: 1.4s; }
+        .econ-3 { bottom: 14%; left: 8%; animation-delay: 2.8s; }
+        .econ-4 { bottom: 20%; right: 10%; animation-delay: 1.9s; }
+        .econ-5 { top: 48%; left: 2%; animation-delay: 1s; }
+        .econ-6 { top: 58%; right: 3%; animation-delay: 3.4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 2rem 3rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.95rem;
+            font-weight: 700;
+            color: #00695C;
+            text-shadow: 2px 2px 4px rgba(0, 105, 92, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+        }
+
+        .title-icon {
+            font-size: 2.15rem;
+            animation: chart-pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes chart-pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.08) rotate(-5deg); }
+        }
+
+        .subtitle {
+            font-size: 0.92rem;
+            color: #00796B;
+            font-weight: 600;
+            margin-top: 0.35rem;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.3rem;
+            max-height: calc(100% - 8rem);
+        }
+
+        /* Left Column - Metrics Table */
+        .metrics-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Metrics Table Card */
+        .metrics-table-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 32px rgba(0, 105, 92, 0.08);
+            padding: 1.2rem;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .table-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #00695C;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        /* Table Styles */
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+
+        .metrics-table th {
+            background: linear-gradient(135deg, rgba(0, 105, 92, 0.15), rgba(0, 121, 107, 0.08));
+            color: #004D40;
+            font-weight: 700;
+            padding: 0.75rem 0.6rem;
+            border: 1.5px solid rgba(0, 105, 92, 0.25);
+            text-align: left;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .metrics-table th:first-child {
+            border-radius: 10px 0 0 10px;
+        }
+
+        .metrics-table th:last-child {
+            border-radius: 0 10px 10px 0;
+        }
+
+        .metrics-table td {
+            padding: 0.7rem 0.6rem;
+            border: 1.5px solid rgba(0, 105, 92, 0.12);
+            transition: all 0.3s ease;
+        }
+
+        .metrics-table tr:hover td {
+            background: rgba(232, 245, 233, 0.5);
+        }
+
+        .metric-name {
+            font-weight: 600;
+            color: #00695C;
+        }
+
+        .year1-value {
+            color: #E65100;
+            font-weight: 600;
+        }
+
+        .year3-value {
+            color: #2E7D32;
+            font-weight: 700;
+        }
+
+        .improvement-arrow {
+            color: #43A047;
+            font-weight: 700;
+        }
+
+        /* Growth Levers Card */
+        .levers-card {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.12), rgba(129, 199, 132, 0.06));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(76, 175, 80, 0.35);
+            border-radius: 14px;
+            padding: 1rem;
+        }
+
+        .levers-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #2E7D32;
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .lever-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.45rem;
+            font-size: 0.78rem;
+            line-height: 1.5;
+            color: #424242;
+            padding: 0.55rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid #66BB6A;
+        }
+
+        .lever-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .lever-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        /* Right Column - Visualizations */
+        .visual-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Chart Container */
+        .chart-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 32px rgba(33, 150, 243, 0.08);
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1565C0;
+            text-align: center;
+            margin-bottom: 0.9rem;
+        }
+
+        /* Bar Comparison Chart */
+        .bar-comparison {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            gap: 0.7rem;
+        }
+
+        .bar-group {
+            display: grid;
+            grid-template-columns: 120px 1fr 1fr;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        .bar-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #1565C0;
+            text-align: right;
+        }
+
+        .bar-wrapper {
+            position: relative;
+            height: 35px;
+            background: rgba(227, 242, 253, 0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1.5px solid rgba(33, 150, 243, 0.2);
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 0.5rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: white;
+            transition: all 0.5s ease;
+        }
+
+        .bar-year1 {
+            background: linear-gradient(90deg, #FFA726, #FF9800);
+        }
+
+        .bar-year3 {
+            background: linear-gradient(90deg, #66BB6A, #4CAF50);
+        }
+
+        .bar-wrapper:hover .bar-fill {
+            filter: brightness(1.15);
+        }
+
+        /* Ratio Highlight Box */
+        .ratio-highlight {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.18), rgba(129, 199, 132, 0.1));
+            border: 2.5px solid rgba(76, 175, 80, 0.45);
+            border-radius: 14px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .ratio-label {
+            font-size: 0.82rem;
+            color: #2E7D32;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .ratio-values {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+
+        .ratio-from {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #F57C00;
+        }
+
+        .ratio-arrow {
+            font-size: 1.5rem;
+            color: #43A047;
+        }
+
+        .ratio-to {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1B5E20;
+        }
+
+        .ratio-note {
+            font-size: 0.7rem;
+            color: #558B2F;
+            margin-top: 0.3rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 0.9rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* Scrollbar for table */
+        .metrics-table-card::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .metrics-table-card::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 3px;
+        }
+
+        .metrics-table-card::-webkit-scrollbar-thumb {
+            background: rgba(0, 105, 92, 0.3);
+            border-radius: 3px;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 1.8rem 2.5rem; }
+            .main-title { font-size: 1.7rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper { 
+                grid-template-columns: 1fr; 
+                gap: 1rem;
+            }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-econ econ-1">📊</div>
+        <div class="floating-econ econ-2">💹</div>
+        <div class="floating-econ econ-3">📈</div>
+        <div class="floating-econ econ-4">💰</div>
+        <div class="floating-econ econ-5">⚡</div>
+        <div class="floating-econ econ-6">🎯</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#00695C"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#00796B"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#00897B"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#26A69A"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">📊</span>
+                Unit Economics & Efficiency Metrics
+                <span class="title-icon">📊</span>
+            </h1>
+            <p class="subtitle">A Path to Profitability Powered by High LTV and Low Friction</p>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            <!-- Left Column - Table & Levers -->
+            <div class="metrics-column">
+                <!-- Key Metrics Table -->
+                <div class="metrics-table-card">
+                    <h3 class="table-title">📋 Key Metrics Comparison</h3>
+                    
+                    <table class="metrics-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Year 1 (Target)</th>
+                                <th>Year 3 (Scaled)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="metric-name">CAC (Customer Acquisition Cost)</td>
+                                <td class="year1-value">BDT 350 ($3.00)</td>
+                                <td class="year3-value">BDT 210 ($1.80)</td>
+                            </tr>
+                            <tr>
+                                <td class="metric-name">LTV (6-Month Lifetime Value)</td>
+                                <td class="year1-value">BDT 1,150 ($9.80)</td>
+                                <td class="year3-value">BDT 1,850 ($15.80)</td>
+                            </tr>
+                            <tr>
+                                <td class="metric-name">LTV:CAC Ratio</td>
+                                <td class="year1-value">3.2x</td>
+                                <td class="year3-value"><span class="improvement-arrow">↑</span> 8.8x</td>
+                            </tr>
+                            <tr>
+                                <td class="metric-name">Payback Period</td>
+                                <td class="year1-value">3.5 Months</td>
+                                <td class="year3-value"><span class="improvement-arrow">↓</span> 2.1 Months</td>
+                            </tr>
+                            <tr>
+                                <td class="metric-name">Monthly Churn Rate</td>
+                                <td class="year1-value">&lt; 6%</td>
+                                <td class="year3-value"><span class="improvement-arrow">↓</span> &lt; 4.5%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Growth Levers -->
+                <div class="levers-card">
+                    <h3 class="levers-title">
+                        <span>⚡</span> Growth & Operating Levers
+                    </h3>
+                    
+                    <div class="lever-item">
+                        <span class="lever-icon">🔄</span>
+                        <div><strong>Referral Loops:</strong> "Mother-to-Mother" community rewards reduce blended CAC by <strong style="color:#2E7D32;">40%</strong> as network effect scales</div>
+                    </div>
+                    
+                    <div class="lever-item">
+                        <span class="lever-icon">🤖</span>
+                        <div><strong>Operating Leverage:</strong> As AI Vision model matures, manual verification costs drop near zero, driving Gross Margins from <strong style="color:#E65100;">65%</strong> to <strong style="color:#2E7D32;">82%</strong> by Year 3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Visualizations -->
+            <div class="visual-column">
+                <!-- Bar Comparison Chart -->
+                <div class="chart-card">
+                    <h3 class="chart-title">📈 Unit Economics Improvement Trajectory</h3>
+                    
+                    <div class="bar-comparison">
+                        <div class="bar-group">
+                            <div class="bar-label">CAC</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-year1" style="width: 70%;">$3.00</div>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-year3" style="width: 42%;">$1.80</div>
+                            </div>
+                        </div>
+
+                        <div class="bar-group">
+                            <div class="bar-label">LTV</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-year1" style="width: 62%;">$9.80</div>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-year3" style="width: 100%;">$15.80</div>
+                            </div>
+                        </div>
+
+                        <div class="bar-group">
+                            <div class="bar-label">Ratio</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-year1" style="width: 36%;">3.2x</div>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-year3" style="width: 100%;">8.8x</div>
+                            </div>
+                        </div>
+
+                        <div class="bar-group">
+                            <div class="bar-label">Churn</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-year1" style="width: 60%;">&lt;6%</div>
+                            </div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-year3" style="width: 45%;">&lt;4.5%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Legend -->
+                    <div style="display:flex;justify-content:center;gap:1.5rem;margin-top:0.8rem;font-size:0.75rem;color:#616161;">
+                        <span style="display:flex;align-items:center;gap:0.3rem;">
+                            <span style="width:16px;height:12px;background:linear-gradient(90deg,#FFA726,#FF9800);border-radius:3px;"></span> Year 1
+                        </span>
+                        <span style="display:flex;align-items:center;gap:0.3rem;">
+                            <span style="width:16px;height:12px;background:linear-gradient(90deg,#66BB6A,#4CAF50);border-radius:3px;"></span> Year 3
+                        </span>
+                    </div>
+                </div>
+
+                <!-- LTV:CAC Ratio Highlight -->
+                <div class="ratio-highlight">
+                    <div class="ratio-label">🎯 LTV:CAC Ratio Evolution</div>
+                    <div class="ratio-values">
+                        <div class="ratio-from">3.2x</div>
+                        <div class="ratio-arrow">→</div>
+                        <div class="ratio-to">8.8x</div>
+                    </div>
+                    <div class="ratio-note">Strong unit economics with improving efficiency through network effects</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Slide 17 / 20</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-econ');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg'})`;
+            });
+        });
+
+        // Add hover effects to bars
+        document.querySelectorAll('.bar-fill').forEach(bar => {
+            bar.addEventListener('mouseenter', () => {
+                bar.style.transform = 'scaleX(1.02)';
+            });
+            bar.addEventListener('mouseleave', () => {
+                bar.style.transform = 'scaleX(1)';
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

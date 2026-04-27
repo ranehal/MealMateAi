@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operational Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-ops {
+            position: absolute;
+            font-size: 2.4rem;
+            opacity: 0.11;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .ops-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .ops-2 { top: 16%; right: 6%; animation-delay: 1.4s; }
+        .ops-3 { bottom: 14%; left: 8%; animation-delay: 2.8s; }
+        .ops-4 { bottom: 20%; right: 10%; animation-delay: 1.9s; }
+        .ops-5 { top: 48%; left: 2%; animation-delay: 1s; }
+        .ops-6 { top: 58%; right: 3%; animation-delay: 3.4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 2rem 3rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.95rem;
+            font-weight: 700;
+            color: #E65100;
+            text-shadow: 2px 2px 4px rgba(230, 81, 0, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+        }
+
+        .title-icon {
+            font-size: 2.15rem;
+            animation: gear-pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes gear-pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.08) rotate(180deg); }
+        }
+
+        .subtitle {
+            font-size: 0.92rem;
+            color: #F57C00;
+            font-weight: 600;
+            margin-top: 0.35rem;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.3rem;
+            max-height: calc(100% - 8rem);
+        }
+
+        /* Left Column - Operations Components */
+        .ops-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 14px;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 6px 24px rgba(230, 81, 0, 0.06);
+            padding: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(230, 81, 0, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid rgba(230, 81, 0, 0.18);
+        }
+
+        .card-icon {
+            font-size: 1.4rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #E65100;
+        }
+
+        /* Operation Items */
+        .op-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+
+        .op-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.45rem;
+            font-size: 0.78rem;
+            line-height: 1.45;
+            color: #424242;
+            padding: 0.55rem;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.06), rgba(255, 193, 7, 0.03));
+            border-radius: 8px;
+            border-left: 3px solid #FFA726;
+            transition: all 0.3s ease;
+        }
+
+        .op-item:hover {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.12), rgba(255, 193, 7, 0.06));
+            transform: translateX(3px);
+        }
+
+        .item-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 0.05rem;
+        }
+
+        .item-text strong {
+            color: #E65100;
+            font-weight: 600;
+        }
+
+        /* Right Column - Workflow & Quote */
+        .workflow-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Workflow Diagram */
+        .workflow-diagram {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 32px rgba(76, 175, 80, 0.08);
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .workflow-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2E7D32;
+            text-align: center;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Workflow Flow */
+        .workflow-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        .flow-node {
+            width: 90%;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(129, 199, 132, 0.08));
+            border: 2px solid rgba(76, 175, 80, 0.35);
+            border-radius: 12px;
+            padding: 0.7rem 0.9rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .flow-node:hover {
+            transform: scale(1.04);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.2);
+            border-color: #66BB6A;
+        }
+
+        .node-icon {
+            font-size: 1.4rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .node-label {
+            font-weight: 700;
+            color: #2E7D32;
+            font-size: 0.82rem;
+            line-height: 1.2;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #66BB6A;
+            animation: arrow-flow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes arrow-flow {
+            0%, 100% { transform: translateY(0); opacity: 0.7; }
+            50% { transform: translateY(4px); opacity: 1; }
+        }
+
+        /* Speaker Script Quote */
+        .speaker-quote {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(66, 165, 245, 0.05));
+            border: 2px solid rgba(33, 150, 243, 0.3);
+            border-radius: 14px;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .quote-icon {
+            font-size: 2rem;
+            color: #1976D2;
+            opacity: 0.3;
+            position: absolute;
+            top: 0.5rem;
+            left: 0.8rem;
+        }
+
+        .quote-text {
+            font-size: 0.78rem;
+            color: #1565C0;
+            line-height: 1.55;
+            font-style: italic;
+            padding-left: 1.8rem;
+            font-weight: 500;
+        }
+
+        .quote-highlight {
+            color: #D84315;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 0.9rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 1.8rem 2.5rem; }
+            .main-title { font-size: 1.7rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper { 
+                grid-template-columns: 1fr; 
+                gap: 1rem;
+            }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-ops ops-1">⚙️</div>
+        <div class="floating-ops ops-2">🤝</div>
+        <div class="floating-ops ops-3">🚚</div>
+        <div class="floating-ops ops-4">💬</div>
+        <div class="floating-ops ops-5">✅</div>
+        <div class="floating-ops ops-6">🔗</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#E65100"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#F57C00"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#FF9800"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#FFA726"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">⚙️</span>
+                Operational Strategy — The Execution Engine
+                <span class="title-icon">⚙️</span>
+            </h1>
+            <p class="subtitle">Beyond Code: Building the Logistics of Trust</p>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            <!-- Left Column - Operations Details -->
+            <div class="ops-column">
+                <!-- Marketplace Moderation -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-icon">🛡️</span>
+                        <h3 class="card-title">Marketplace Moderation</h3>
+                    </div>
+                    <div class="op-list">
+                        <div class="op-item">
+                            <span class="item-icon">✅</span>
+                            <div class="item-text"><strong>Verification Loop:</strong> Users must maintain "Community Trust Score" based on peer reviews to sell home-cooked portions.</div>
+                        </div>
+                        <div class="op-item">
+                            <span class="item-icon">📋</span>
+                            <div class="item-text"><strong>Standardized Hygiene Guidelines:</strong> Providing clear, AI-assisted packaging and storage tips for marketplace participants.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategic Partnerships -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-icon">🤝</span>
+                        <h3 class="card-title">Strategic Partnerships</h3>
+                    </div>
+                    <div class="op-list">
+                        <div class="op-item">
+                            <span class="item-icon">🚚</span>
+                            <div class="item-text"><strong>Logistics:</strong> Exploring integration with local third-party couriers for "Last-Mile Neighbor Delivery".</div>
+                        </div>
+                        <div class="op-item">
+                            <span class="item-icon">🛒</span>
+                            <div class="item-text"><strong>Retail:</strong> Deep API partnerships with platforms like Chaldal to enable "Auto-Replenish" carts based on AI-predicted consumption.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Growth Hacking -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-icon">📱</span>
+                        <h3 class="card-title">Growth Hacking ("Mom Strategy")</h3>
+                    </div>
+                    <div class="op-list">
+                        <div class="op-item">
+                            <span class="item-icon">💬</span>
+                            <div class="item-text">Deep integration within <strong>WhatsApp and Facebook "Mother Communities"</strong> to drive organic, word-of-mouth adoption.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Workflow & Quote -->
+            <div class="workflow-column">
+                <!-- Operational Workflow Diagram -->
+                <div class="workflow-diagram">
+                    <h3 class="workflow-title">🔄 Operations Workflow Loop</h3>
+                    
+                    <div class="workflow-flow">
+                        <div class="flow-node">
+                            <div class="node-icon">👥</div>
+                            <div class="node-label">User Onboarding<br>& Verification</div>
+                        </div>
+                        
+                        <div class="flow-arrow">↓</div>
+                        
+                        <div class="flow-node">
+                            <div class="node-icon">🍳</div>
+                            <div class="node-label">Quality Control<br>& Hygiene Standards</div>
+                        </div>
+                        
+                        <div class="flow-arrow">↓</div>
+                        
+                        <div class="flow-node">
+                            <div class="node-icon">⭐</div>
+                            <div class="node-label">Trust Score<br>& Community Reviews</div>
+                        </div>
+                        
+                        <div class="flow-arrow">↓</div>
+                        
+                        <div class="flow-node">
+                            <div class="node-icon">🤝</div>
+                            <div class="node-label">Partner Integration<br>& Logistics Coordination</div>
+                        </div>
+                        
+                        <div class="flow-arrow">↻</div>
+                        
+                        <div class="flow-node" style="background: linear-gradient(135deg, rgba(33, 150, 243, 0.15), rgba(66, 165, 245, 0.08)); border-color: rgba(33, 150, 243, 0.35);">
+                            <div class="node-icon">🔄</div>
+                            <div class="node-label" style="color: #1565C0;">Self-Sustaining<br>Ecosystem</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Speaker Script Quote -->
+                <div class="speaker-quote">
+                    <span class="quote-icon">"</span>
+                    <div class="quote-text">
+                        Operations in food tech usually fail on logistics. We aren't building a fleet of trucks; we are building a <span class="quote-highlight">network of trust</span>. Our operational focus is on moderating quality of data and community interactions, making the system <span class="quote-highlight">self-sustaining</span>.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Slide 13 / 20</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-ops');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg}')`;
+            });
+        });
+
+        // Add interactive effects to flow nodes
+        document.querySelectorAll('.flow-node').forEach(node => {
+            node.addEventListener('mouseenter', () => {
+                node.style.borderColor = '#4CAF50';
+            });
+            node.addEventListener('mouseleave', () => {
+                if (!node.textContent.includes('Self-Sustaining')) {
+                    node.style.borderColor = 'rgba(76, 175, 80, 0.35)';
+                } else {
+                    node.style.borderColor = 'rgba(33, 150, 243, 0.35)';
+                }
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

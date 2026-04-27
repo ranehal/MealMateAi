@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The MealMate AI Ecosystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-food {
+            position: absolute;
+            font-size: 2.6rem;
+            opacity: 0.11;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .food-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .food-2 { top: 16%; right: 6%; animation-delay: 1.3s; }
+        .food-3 { bottom: 14%; left: 8%; animation-delay: 2.6s; }
+        .food-4 { bottom: 20%; right: 10%; animation-delay: 1.8s; }
+        .food-5 { top: 48%; left: 2%; animation-delay: 0.9s; }
+        .food-6 { top: 58%; right: 3%; animation-delay: 3.2s; }
+        .food-7 { top: 35%; right: 18%; animation-delay: 2.1s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-17px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 52px;
+            height: 52px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 2.2rem 3.2rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: #2E7D32;
+            text-shadow: 2px 2px 4px rgba(46, 125, 50, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+        }
+
+        .title-icon {
+            font-size: 2.3rem;
+            animation: spin-slow 8s linear infinite;
+        }
+
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .subtitle {
+            font-size: 0.98rem;
+            color: #558B2F;
+            font-weight: 500;
+            margin-top: 0.4rem;
+            line-height: 1.4;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            max-height: calc(100% - 8rem);
+        }
+
+        /* Ecosystem Grid */
+        .ecosystem-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.3rem;
+            position: relative;
+        }
+
+        /* Connection Arrows */
+        .arrow-connector {
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 40px;
+            z-index: 15;
+            font-size: 1.8rem;
+            animation: arrow-pulse 2s ease-in-out infinite;
+        }
+
+        .arrow-right {
+            left: calc(33.33% + 0.65rem);
+            transform: translate(-50%, -50%);
+        }
+
+        .arrow-left {
+            left: calc(66.66% - 0.65rem);
+            transform: translate(-50%, -50%) scaleX(-1);
+        }
+
+        @keyframes arrow-pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+        }
+
+        /* Glass Card Style */
+        .pillar-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 
+                0 8px 32px rgba(46, 125, 50, 0.08),
+                inset 0 2px 0 rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .pillar-card:hover::before {
+            left: 100%;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 
+                0 12px 40px rgba(46, 125, 50, 0.15),
+                inset 0 2px 0 rgba(255, 255, 255, 0.95);
+        }
+
+        /* Pillar Header */
+        .pillar-header {
+            text-align: center;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(76, 175, 80, 0.25);
+        }
+
+        .pillar-icon {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            animation: icon-bounce 3s ease-in-out infinite;
+        }
+
+        .pillar-1 .pillar-icon { animation-delay: 0s; }
+        .pillar-2 .pillar-icon { animation-delay: 0.5s; }
+        .pillar-3 .pillar-icon { animation-delay: 1s; }
+
+        @keyframes icon-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .pillar-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            color: white;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 12px;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.5px;
+        }
+
+        .pillar-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #2E7D32;
+            line-height: 1.3;
+            margin-bottom: 0.3rem;
+        }
+
+        .pillar-subtitle {
+            font-size: 0.82rem;
+            color: #689F38;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Pillar Content */
+        .pillar-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .content-item {
+            background: rgba(232, 245, 233, 0.6);
+            border-radius: 11px;
+            padding: 0.8rem;
+            border-left: 3px solid #66BB6A;
+            transition: all 0.3s ease;
+        }
+
+        .content-item:hover {
+            background: rgba(232, 245, 233, 0.85);
+            transform: translateX(4px);
+        }
+
+        .item-label {
+            font-weight: 700;
+            color: #2E7D32;
+            font-size: 0.88rem;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .item-text {
+            font-size: 0.82rem;
+            color: #424242;
+            line-height: 1.45;
+        }
+
+        /* Result Banner */
+        .result-banner {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.18) 0%, rgba(139, 195, 74, 0.12) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 2.5px solid rgba(76, 175, 80, 0.35);
+            padding: 1.3rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-banner::after {
+            content: '✨';
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 4rem;
+            opacity: 0.12;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: translateY(-50%) scale(1) rotate(0deg); opacity: 0.12; }
+            50% { transform: translateY(-50%) scale(1.2) rotate(180deg); opacity: 0.25; }
+        }
+
+        .result-icon {
+            font-size: 3rem;
+            animation: success-pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes success-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
+        .result-content {
+            flex: 1;
+        }
+
+        .result-label {
+            font-size: 0.92rem;
+            color: #2E7D32;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 0.4rem;
+        }
+
+        .result-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1B5E20;
+            line-height: 1.3;
+        }
+
+        .result-highlight {
+            color: #388E3C;
+            font-size: 1.8rem;
+        }
+
+        .result-note {
+            font-size: 0.88rem;
+            color: #558B2F;
+            font-style: italic;
+            margin-top: 0.3rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 2rem 2.5rem; }
+            .main-title { font-size: 1.85rem; }
+            .pillar-title { font-size: 1.05rem; }
+            .result-value { font-size: 1.4rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .ecosystem-grid { 
+                grid-template-columns: 1fr; 
+                gap: 1rem;
+            }
+            .arrow-connector { display: none; }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-food food-1">🔄</div>
+        <div class="floating-food food-2">📸</div>
+        <div class="floating-food food-3">🧠</div>
+        <div class="floating-food food-4">💰</div>
+        <div class="floating-food food-5">🤝</div>
+        <div class="floating-food food-6">✅</div>
+        <div class="floating-food food-7">🎯</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#2E7D32"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#388E3C"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#43A047"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#4CAF50"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">♻️</span>
+                The MealMate AI Ecosystem (Solution)
+                <span class="title-icon">♻️</span>
+            </h1>
+            <p class="subtitle">Unifying the Fragmented Food Journey into One Intelligent Loop</p>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            <!-- Three-Pillar Ecosystem -->
+            <div class="ecosystem-grid">
+                <!-- Arrow Connectors -->
+                <div class="arrow-connector arrow-right">→</div>
+                <div class="arrow-connector arrow-left">→</div>
+
+                <!-- Pillar 1: Inventory Intelligence -->
+                <div class="pillar-card pillar-1">
+                    <div class="pillar-header">
+                        <span class="pillar-number">PILLAR 1</span>
+                        <span class="pillar-icon">📷</span>
+                        <h2 class="pillar-title">Inventory Intelligence</h2>
+                        <span class="pillar-subtitle">(Input)</span>
+                    </div>
+                    <div class="pillar-content">
+                        <div class="content-item">
+                            <div class="item-label">🧾 AI Receipt OCR</div>
+                            <div class="item-text">Automatic extraction of purchased items from grocery receipts</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-label">📸 Fridge Vision</div>
+                            <div class="item-text">Computer vision scanning to identify current pantry contents</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-label">📊 Barcode Scanning</div>
+                            <div class="item-text">Quick barcode capture for instant inventory logging</div>
+                        </div>
+                        <div class="content-item" style="background: rgba(129, 199, 132, 0.25); border-left-color: #4CAF50;">
+                            <div class="item-text" style="font-weight: 600; color: #2E7D32;">
+                                ✨ No manual logging required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pillar 2: Decision Engine -->
+                <div class="pillar-card pillar-2">
+                    <div class="pillar-header">
+                        <span class="pillar-number">PILLAR 2</span>
+                        <span class="pillar-icon">🧠</span>
+                        <h2 class="pillar-title">Decision Engine</h2>
+                        <span class="pillar-subtitle">(Process)</span>
+                    </div>
+                    <div class="pillar-content">
+                        <div class="content-item">
+                            <div class="item-label">⏰ FEFO Logic</div>
+                            <div class="item-text"><strong>First Expired, First Out:</strong> Automatically prioritizes recipes using ingredients closest to spoiling</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-label">🥗 Dynamic Nutrition</div>
+                            <div class="item-text">Adjusts meal plans based on daily activity levels and health markers (BMI/BMR)</div>
+                        </div>
+                        <div class="content-item" style="background: rgba(129, 199, 132, 0.25); border-left-color: #4CAF50;">
+                            <div class="item-text" style="font-weight: 600; color: #2E7D32;">
+                                🎯 AI-powered smart meal optimization
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pillar 3: Commerce Oracle -->
+                <div class="pillar-card pillar-3">
+                    <div class="pillar-header">
+                        <span class="pillar-number">PILLAR 3</span>
+                        <span class="pillar-icon">🛒</span>
+                        <h2 class="pillar-title">Commerce Oracle</h2>
+                        <span class="pillar-subtitle">(Output)</span>
+                    </div>
+                    <div class="pillar-content">
+                        <div class="content-item">
+                            <div class="item-label">💰 Price Comparison</div>
+                            <div class="item-text">Real-time tracking across Chaldal vs. Shwapno vs. Local Markets</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-label">🤝 C2C Marketplace</div>
+                            <div class="item-text">"Neighbor-Sharing" platform for excess portions or ingredients</div>
+                        </div>
+                        <div class="content-item" style="background: rgba(129, 199, 132, 0.25); border-left-color: #4CAF50;">
+                            <div class="item-text" style="font-weight: 600; color: #2E7D32;">
+                                💡 Smart commerce integration
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Banner -->
+            <div class="result-banner">
+                <span class="result-icon">🎉</span>
+                <div class="result-content">
+                    <div class="result-label">✨ The Result ✨</div>
+                    <div class="result-value">
+                        A <span class="result-highlight">20%</span> reduction in monthly grocery spend<br>
+                        and <span class="result-highlight">zero mental load</span> on meal planning
+                    </div>
+                    <div class="result-note">Complete intelligent loop: Inventory → Decision → Commerce</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Slide 4 / 20</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const foods = document.querySelectorAll('.floating-food');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            foods.forEach((food, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                food.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg'})`;
+            });
+        });
+
+        // Add interactive hover effects
+        document.querySelectorAll('.pillar-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderColor = '#66BB6A';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = 'rgba(255, 255, 255, 0.85)';
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

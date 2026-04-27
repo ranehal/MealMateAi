@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hidden Crisis in Every Kitchen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --warm-orange: #FF9800;
+            --soft-pink: #FF8A80;
+            --fresh-green: #66BB6A;
+            --sunny-yellow: #FFD54F;
+            --cream-bg: #FFF8E1;
+            --soft-brown: #8D6E63;
+            --light-pink: #FFE0E0;
+            --light-orange: #FFE0B2;
+            --light-green: #E8F5E9;
+            --light-yellow: #FFF9C4;
+            --white: #ffffff;
+            --text-dark: #5D4037;
+            --text-medium: #795548;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFE0E0 50%, #FFE0B2 100%);
+            color: var(--text-dark);
+            overflow: hidden;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .header {
+            padding: 45px 70px 25px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 0.8s ease-out;
+        }
+        .header-content h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 34px;
+            background: linear-gradient(135deg, var(--warm-orange), var(--soft-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        .header-content p {
+            color: var(--text-medium);
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .crisis-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--light-pink);
+            color: var(--soft-pink);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            border: 2px solid #FFAB91;
+            animation: bounce 3s infinite;
+        }
+        
+        .content-grid {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            padding: 30px 70px;
+            gap: 24px;
+            align-items: center;
+        }
+        
+        .stat-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 28px;
+            padding: 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+        }
+        .stat-card:nth-child(1)::before { background: linear-gradient(90deg, var(--soft-pink), var(--warm-orange)); }
+        .stat-card:nth-child(2)::before { background: linear-gradient(90deg, var(--sunny-yellow), var(--warm-orange)); }
+        .stat-card:nth-child(3)::before { background: linear-gradient(90deg, var(--fresh-green), #43A047); }
+        
+        .stat-card:nth-child(1) { animation: slideUp 0.8s ease-out 0.2s both; }
+        .stat-card:nth-child(2) { animation: slideUp 0.8s ease-out 0.4s both; }
+        .stat-card:nth-child(3) { animation: slideUp 0.8s ease-out 0.6s both; }
+        
+        .stat-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+        }
+        
+        .stat-icon-container {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        .stat-icon-bg {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .stat-card:nth-child(1) .stat-icon-bg { background: linear-gradient(135deg, #FFE0E0, #FFAB91); }
+        .stat-card:nth-child(2) .stat-icon-bg { background: linear-gradient(135deg, #FFF9C4, #FFE0B2); }
+        .stat-card:nth-child(3) .stat-icon-bg { background: linear-gradient(135deg, #E8F5E9, #C8E6C9); }
+        
+        .stat-icon {
+            font-size: 56px;
+            z-index: 2;
+        }
+        
+        .floating-emojis {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        .emoji {
+            position: absolute;
+            font-size: 24px;
+            animation: bounce 4s infinite;
+        }
+        .stat-card:nth-child(1) .emoji:nth-child(1) { top: -10px; left: 0; animation-delay: 0s; }
+        .stat-card:nth-child(1) .emoji:nth-child(2) { top: 20px; right: -5px; animation-delay: 1s; }
+        .stat-card:nth-child(2) .emoji:nth-child(1) { top: -5px; left: 10px; animation-delay: 0.5s; }
+        .stat-card:nth-child(2) .emoji:nth-child(2) { bottom: -10px; right: 10px; animation-delay: 1.5s; }
+        .stat-card:nth-child(3) .emoji:nth-child(1) { top: 0; right: 0; animation-delay: 1s; }
+        .stat-card:nth-child(3) .emoji:nth-child(2) { bottom: -5px; left: 5px; animation-delay: 2s; }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.1); }
+        }
+        
+        .stat-circle {
+            width: 180px;
+            height: 180px;
+            position: relative;
+            margin-bottom: 24px;
+        }
+        .circle-bg {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #FAFAFA;
+            position: relative;
+            overflow: hidden;
+            border: 6px solid #F5F5F5;
+        }
+        .circle-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            border-radius: 50%;
+            transition: height 1.5s ease;
+        }
+        .stat-card:nth-child(1) .circle-fill { height: 25%; background: linear-gradient(to top, var(--soft-pink), #FF5252); }
+        .stat-card:nth-child(2) .circle-fill { height: 70%; background: linear-gradient(to top, var(--sunny-yellow), #FFB300); }
+        .stat-card:nth-child(3) .circle-fill { height: 80%; background: linear-gradient(to top, var(--fresh-green), #2E7D32); }
+        
+        .stat-number-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+        }
+        .stat-number {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 900;
+            font-size: 58px;
+            line-height: 1;
+            color: var(--text-dark);
+        }
+        .stat-percent {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-medium);
+        }
+        
+        .stat-label {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+        
+        .stat-desc {
+            font-size: 15px;
+            color: var(--text-medium);
+            line-height: 1.6;
+            max-width: 280px;
+            font-weight: 500;
+        }
+        
+        .impact-tag {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: var(--white);
+            padding: 8px 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-medium);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 2px solid #F5F5F5;
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>Oh No! Kitchen Struggles 🍳</h1>
+            <p>Let's fix those everyday kitchen challenges together</p>
+        </div>
+        <div class="crisis-badge">
+            <i class="material-icons" style="font-size: 20px;">sentiment_dissatisfied</i>
+            We Can Help!
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Card 1: Food Waste -->
+        <div class="stat-card">
+            <div class="impact-tag">💸 Money Lost</div>
+            <div class="stat-icon-container">
+                <div class="stat-icon-bg">
+                    <div class="stat-icon">🗑️</div>
+                    <div class="floating-emojis">
+                        <div class="emoji">🥦</div>
+                        <div class="emoji">🍌</div>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-circle">
+                <div class="circle-bg">
+                    <div class="circle-fill"></div>
+                </div>
+                <div class="stat-number-container">
+                    <div class="stat-number">25</div>
+                    <div class="stat-percent">%</div>
+                </div>
+            </div>
+            <div class="stat-label">Food Waste</div>
+            <p class="stat-desc">The average urban household bin is a "graveyard" of forgotten vegetables and expired goods.</p>
+        </div>
+
+        <!-- Card 2: Mental Load -->
+        <div class="stat-card">
+            <div class="impact-tag">😰 Daily Stress</div>
+            <div class="stat-icon-container">
+                <div class="stat-icon-bg">
+                    <div class="stat-icon">🧑‍🍳</div>
+                    <div class="floating-emojis">
+                        <div class="emoji">💭</div>
+                        <div class="emoji">😰</div>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-circle">
+                <div class="circle-bg">
+                    <div class="circle-fill"></div>
+                </div>
+                <div class="stat-number-container">
+                    <div class="stat-number">70</div>
+                    <div class="stat-percent">%</div>
+                </div>
+            </div>
+            <div class="stat-label">Mental Load</div>
+            <p class="stat-desc">Mothers report daily stress over "What to cook?" to meet multi-generational health needs.</p>
+        </div>
+
+        <!-- Card 3: Nutritional Blindness -->
+        <div class="stat-card">
+            <div class="impact-tag">❓ Healthy?</div>
+            <div class="stat-icon-container">
+                <div class="stat-icon-bg">
+                    <div class="stat-icon">🥗</div>
+                    <div class="floating-emojis">
+                        <div class="emoji">❓</div>
+                        <div class="emoji">🤷</div>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-circle">
+                <div class="circle-bg">
+                    <div class="circle-fill"></div>
+                </div>
+                <div class="stat-number-container">
+                    <div class="stat-number">80</div>
+                    <div class="stat-percent">%</div>
+                </div>
+            </div>
+            <div class="stat-label">Nutritional Blindness</div>
+            <p class="stat-desc">Meals are consumed without knowing if they actually meet BMI/BMR requirements.</p>
+        </div>
+    </div>
+    <script src="navigation.js"></script>
+</body>
+</html>

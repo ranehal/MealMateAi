@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use of Funds & Milestone Exit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-funds {
+            position: absolute;
+            font-size: 2.3rem;
+            opacity: 0.11;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .funds-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .funds-2 { top: 16%; right: 6%; animation-delay: 1.4s; }
+        .funds-3 { bottom: 14%; left: 8%; animation-delay: 2.8s; }
+        .funds-4 { bottom: 20%; right: 10%; animation-delay: 1.9s; }
+        .funds-5 { top: 48%; left: 2%; animation-delay: 1s; }
+        .funds-6 { top: 58%; right: 3%; animation-delay: 3.4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 1.8rem 2.8rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 0.85rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #C62828;
+            text-shadow: 2px 2px 4px rgba(198, 40, 40, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+
+        .title-icon {
+            font-size: 2rem;
+            animation: target-pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes target-pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.12) rotate(-5deg); }
+            75% { transform: scale(1.12) rotate(5deg); }
+        }
+
+        .subtitle {
+            font-size: 0.88rem;
+            color: #D32F2F;
+            font-weight: 600;
+            margin-top: 0.3rem;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            max-height: calc(100% - 7.5rem);
+        }
+
+        /* Left Column - Funding Details */
+        .funding-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 13px;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 5px 22px rgba(198, 40, 40, 0.06);
+            padding: 0.95rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateX(5px) translateY(-3px);
+            box-shadow: 0 10px 30px rgba(198, 40, 40, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin-bottom: 0.65rem;
+            padding-bottom: 0.55rem;
+            border-bottom: 2px solid rgba(198, 40, 40, 0.18);
+        }
+
+        .card-icon {
+            font-size: 1.35rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #C62828;
+        }
+
+        /* Ask Amount */
+        .ask-display {
+            text-align: center;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, rgba(198, 40, 40, 0.12), rgba(211, 47, 47, 0.06));
+            border-radius: 12px;
+            border: 2px solid rgba(198, 40, 40, 0.3);
+            margin-bottom: 0.7rem;
+        }
+
+        .ask-label {
+            font-size: 0.78rem;
+            color: #B71C1C;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+
+        .ask-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #D32F2F;
+        }
+
+        .ask-note {
+            font-size: 0.72rem;
+            color: #C62828;
+            margin-top: 0.25rem;
+        }
+
+        /* Allocation Items */
+        .allocation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+
+        .alloc-item {
+            display: grid;
+            grid-template-columns: 70px 1fr;
+            gap: 0.5rem;
+            align-items: center;
+            padding: 0.55rem;
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.08), rgba(66, 165, 245, 0.04));
+            border-radius: 9px;
+            border-left: 3px solid #42A5F5;
+            transition: all 0.3s ease;
+        }
+
+        .alloc-item:hover {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.15), rgba(66, 165, 245, 0.08));
+            transform: translateX(3px);
+        }
+
+        .alloc-percent {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1565C0;
+            text-align: center;
+        }
+
+        .alloc-desc {
+            font-size: 0.74rem;
+            color: #424242;
+            line-height: 1.45;
+        }
+
+        /* Milestones Card */
+        .milestones-card {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.12), rgba(129, 199, 132, 0.06));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(76, 175, 80, 0.35);
+            border-radius: 13px;
+            padding: 0.95rem;
+        }
+
+        .milestone-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.45rem;
+            font-size: 0.76rem;
+            line-height: 1.5;
+            color: #424242;
+            margin-bottom: 0.55rem;
+        }
+
+        .milestone-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .ms-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        /* Right Column - Visualizations & Quote */
+        .visual-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        /* Pie Chart Card */
+        .pie-chart-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 32px rgba(76, 175, 80, 0.08);
+            padding: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .chart-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #2E7D32;
+            text-align: center;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Pie Chart */
+        .pie-chart {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        .pie-chart:hover {
+            transform: scale(1.08);
+        }
+
+        .pie-segment {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0 100%);
+            transition: all 0.3s ease;
+        }
+
+        .seg-rd { 
+            background: conic-gradient(from 0deg, #66BB6A 0%, #66BB6A 162deg, transparent 162deg);
+        }
+        
+        .seg-data { 
+            background: conic-gradient(from 162deg, #42A5F5 0%, #42A5F5 252deg, transparent 252deg);
+        }
+        
+        .seg-gtm { 
+            background: conic-gradient(from 252deg, #AB47BC 0%, #AB47BC 360deg, transparent 360deg);
+        }
+
+        .pie-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 75px;
+            height: 75px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .center-label {
+            font-size: 0.65rem;
+            color: #616161;
+            font-weight: 600;
+        }
+
+        .center-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2E7D32;
+        }
+
+        /* Legend */
+        .legend-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            width: 100%;
+            margin-top: 0.8rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.68rem;
+            color: #424242;
+            justify-content: center;
+        }
+
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        /* Closing Hook */
+        .closing-hook {
+            background: linear-gradient(135deg, rgba(230, 81, 0, 0.12), rgba(245, 124, 0, 0.06));
+            border: 2.5px solid rgba(230, 81, 0, 0.4);
+            border-radius: 14px;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .hook-icon {
+            font-size: 2rem;
+            color: #E65100;
+            opacity: 0.25;
+            position: absolute;
+            top: 0.5rem;
+            left: 0.8rem;
+        }
+
+        .hook-text {
+            font-size: 0.78rem;
+            color: #D84315;
+            line-height: 1.6;
+            font-style: italic;
+            padding-left: 1.8rem;
+            font-weight: 500;
+        }
+
+        .hook-highlight {
+            color: #7B1FA2;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 0.8rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 1.6rem 2.3rem; }
+            .main-title { font-size: 1.6rem; }
+            .ask-value { font-size: 1.7rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper { 
+                grid-template-columns: 1fr; 
+                gap: 0.9rem;
+            }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-funds funds-1">💰</div>
+        <div class="floating-funds funds-2">🎯</div>
+        <div class="floating-funds funds-3">📈</div>
+        <div class="floating-funds funds-4">💎</div>
+        <div class="floating-funds funds-5">🚀</div>
+        <div class="floating-funds funds-6">✨</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#C62828"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#D32F2F"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#EF5350"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#F44336"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">💰</span>
+                Use of Funds & Milestone Exit
+                <span class="title-icon">💰</span>
+            </h1>
+            <p class="subtitle">$250k Seed Capital to Reach $10M+ Series A Valuation</p>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            <!-- Left Column - Funding Details -->
+            <div class="funding-column">
+                <!-- Seed Ask -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-icon">🎯</span>
+                        <h3 class="card-title">The Seed Funding Ask</h3>
+                    </div>
+                    
+                    <div class="ask-display">
+                        <div class="ask-label">SEED CAPITAL REQUIRED</div>
+                        <div class="ask-value">$250,000</div>
+                        <div class="ask-note">For 2-year runway to reach 500k households</div>
+                    </div>
+
+                    <div style="font-size:0.78rem;color:#424242;margin-bottom:0.6rem;line-height:1.5;">
+                        Strategic allocation to maximize growth and market capture efficiency
+                    </div>
+                </div>
+
+                <!-- Funding Mix -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-icon">📊</span>
+                        <h3 class="card-title">The Funding Mix</h3>
+                    </div>
+                    
+                    <div class="allocation-list">
+                        <div class="alloc-item">
+                            <div class="alloc-percent">45%</div>
+                            <div class="alloc-desc"><strong>R&D & Engineering:</strong> Finalizing Federated Learning loop and Computer Vision model for 50,000+ local SKUs</div>
+                        </div>
+
+                        <div class="alloc-item">
+                            <div class="alloc-percent">30%</div>
+                            <div class="alloc-desc"><strong>Operations & Data:</strong> Real-time price API integrations and community moderator training</div>
+                        </div>
+
+                        <div class="alloc-item">
+                            <div class="alloc-percent">25%</div>
+                            <div class="alloc-desc"><strong>Marketing & GTM:</strong> Performance marketing and strategic partnerships with local retail giants</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Series A Triggers -->
+                <div class="milestones-card">
+                    <h3 style="font-family:'Poppins';font-size:0.92rem;font-weight:700;color:#2E7D32;margin-bottom:0.7rem;">🏆 Series A Triggers (18-Month Milestones)</h3>
+                    
+                    <div class="milestone-item">
+                        <span class="ms-icon">✅</span>
+                        <div><strong>Metric 1:</strong> 50,000 Active Households</div>
+                    </div>
+
+                    <div class="milestone-item">
+                        <span class="ms-icon">✅</span>
+                        <div><strong>Metric 2:</strong> BDT 1.2M+ Monthly Recurring Revenue (MRR)</div>
+                    </div>
+
+                    <div class="milestone-item">
+                        <span class="ms-icon">✅</span>
+                        <div><strong>Metric 3:</strong> Documented 25% reduction in household food waste across pilot users</div>
+                    </div>
+
+                    <div style="margin-top:0.6rem;padding-top:0.6rem;border-top:1.5px dashed rgba(76,175,80,0.3);">
+                        <div style="text-align:center;font-size:0.78rem;color:#2E7D32;font-weight:600;">
+                            📈 Exit Valuation: <strong>5x-8x Revenue Multiple</strong> (standard for high-growth SaaS in emerging markets)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Pie Chart & Closing -->
+            <div class="visual-column">
+                <!-- Use of Funds Pie Chart -->
+                <div class="pie-chart-card">
+                    <h3 class="chart-title">💡 Capital Allocation Breakdown</h3>
+                    
+                    <div class="pie-chart">
+                        <div class="pie-segment seg-rd"></div>
+                        <div class="pie-segment seg-data"></div>
+                        <div class="pie-segment seg-gtm"></div>
+                        
+                        <div class="pie-center">
+                            <div class="center-label">TOTAL</div>
+                            <div class="center-value">$250K</div>
+                        </div>
+                    </div>
+
+                    <div class="legend-container">
+                        <div class="legend-item">
+                            <div class="legend-color seg-rd"></div>
+                            <span>R&D (45%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color seg-data"></div>
+                            <span>Ops (30%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color seg-gtm"></div>
+                            <span>GTM (25%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Closing Hook -->
+                <div class="closing-hook">
+                    <span class="hook-icon">"</span>
+                    <div class="hook-text">
+                        MealMate AI doesn't just save households money — it captures the <span class="hook-highlight">high-margin decision layer</span> in Bangladesh's $1T-equivalent food inefficiency problem. With strong unit economics, network effects, and Dhaka as proof point, this is a scalable Kitchen OS with clear exit to retail/FMCG giants.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Slide 20 / 20 • Thank You!</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-funds');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg'})`;
+            });
+        });
+
+        // Add hover effects to pie segments
+        document.querySelectorAll('.pie-segment').forEach(seg => {
+            seg.addEventListener('mouseenter', () => {
+                seg.style.filter = 'brightness(1.2)';
+            });
+            seg.addEventListener('mouseleave', () => {
+                seg.style.filter = '';
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

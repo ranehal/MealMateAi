@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Architecture</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-rev {
+            position: absolute;
+            font-size: 2.4rem;
+            opacity: 0.11;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .rev-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .rev-2 { top: 16%; right: 6%; animation-delay: 1.4s; }
+        .rev-3 { bottom: 14%; left: 8%; animation-delay: 2.8s; }
+        .rev-4 { bottom: 20%; right: 10%; animation-delay: 1.9s; }
+        .rev-5 { top: 48%; left: 2%; animation-delay: 1s; }
+        .rev-6 { top: 58%; right: 3%; animation-delay: 3.4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 2rem 3rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.95rem;
+            font-weight: 700;
+            color: #1565C0;
+            text-shadow: 2px 2px 4px rgba(21, 101, 192, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+        }
+
+        .title-icon {
+            font-size: 2.15rem;
+            animation: coin-spin 3s linear infinite;
+        }
+
+        @keyframes coin-spin {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        .subtitle {
+            font-size: 0.92rem;
+            color: #1976D2;
+            font-weight: 600;
+            margin-top: 0.35rem;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.3rem;
+            max-height: calc(100% - 8rem);
+        }
+
+        /* Left Column - Revenue Streams */
+        .streams-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        /* Revenue Stream Card */
+        .stream-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 13px;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 5px 22px rgba(21, 101, 192, 0.06);
+            padding: 0.95rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stream-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .stream-card:hover::before {
+            left: 100%;
+        }
+
+        .stream-card:hover {
+            transform: translateX(5px) translateY(-3px);
+            box-shadow: 0 10px 30px rgba(21, 101, 192, 0.15);
+        }
+
+        .stream-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.65rem;
+            padding-bottom: 0.55rem;
+            border-bottom: 2px solid rgba(21, 101, 192, 0.18);
+        }
+
+        .stream-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .stream-icon {
+            font-size: 1.35rem;
+        }
+
+        .stream-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #1565C0;
+            line-height: 1.2;
+        }
+
+        .stream-badge {
+            font-size: 0.65rem;
+            background: linear-gradient(135deg, #66BB6A, #81C784);
+            color: white;
+            padding: 0.18rem 0.5rem;
+            border-radius: 7px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .stream-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.4rem;
+            font-size: 0.74rem;
+            line-height: 1.45;
+            color: #424242;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #1976D2;
+            min-width: fit-content;
+        }
+
+        .detail-value {
+            flex: 1;
+        }
+
+        .highlight-price {
+            color: #E65100;
+            font-weight: 700;
+        }
+
+        .highlight-percent {
+            color: #2E7D32;
+            font-weight: 700;
+        }
+
+        /* Right Column - Waterfall Chart */
+        .chart-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Waterfall Chart Container */
+        .waterfall-container {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 32px rgba(33, 150, 243, 0.08);
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1565C0;
+            text-align: center;
+            margin-bottom: 0.9rem;
+        }
+
+        /* Waterfall Chart */
+        .waterfall-chart {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            gap: 0.55rem;
+        }
+
+        .year-row {
+            display: grid;
+            grid-template-columns: 60px repeat(4, 1fr);
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .year-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #0D47A1;
+            text-align: right;
+        }
+
+        .bar-container {
+            position: relative;
+            height: 28px;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .bar-container:hover {
+            transform: scaleY(1.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.58rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .bar-subscription { background: linear-gradient(135deg, #66BB6A, #4CAF50); }
+        .bar-commission { background: linear-gradient(135deg, #42A5F5, #2196F3); }
+        .bar-marketplace { background: linear-gradient(135deg, #AB47BC, #9C27B0); }
+        .bar-data { background: linear-gradient(135deg, #FFA726, #FF9800); }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.7rem;
+            padding-top: 0.7rem;
+            border-top: 2px solid rgba(33, 150, 243, 0.15);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.68rem;
+            color: #424242;
+            justify-content: center;
+        }
+
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        /* Margin Badge */
+        .margin-badge {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(129, 199, 132, 0.08));
+            border: 2px solid rgba(76, 175, 80, 0.35);
+            border-radius: 13px;
+            padding: 0.85rem;
+            text-align: center;
+        }
+
+        .margin-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #2E7D32;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 0.9rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 1.8rem 2.5rem; }
+            .main-title { font-size: 1.7rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper { 
+                grid-template-columns: 1fr; 
+                gap: 1rem;
+            }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-rev rev-1">💰</div>
+        <div class="floating-rev rev-2">📊</div>
+        <div class="floating-rev rev-3">💵</div>
+        <div class="floating-rev rev-4">📈</div>
+        <div class="floating-rev rev-5">💎</div>
+        <div class="floating-rev rev-6">🎯</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1565C0"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1976D2"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1E88E5"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#42A5F5"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">💰</span>
+                Revenue Architecture (The "In/Outs")
+                <span class="title-icon">💰</span>
+            </h1>
+            <p class="subtitle">Multi-Stream Revenue Maximization within Single Ecosystem</p>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            <!-- Left Column - Revenue Streams -->
+            <div class="streams-column">
+                <!-- Stream A: B2C Subscriptions -->
+                <div class="stream-card">
+                    <div class="stream-header">
+                        <div class="stream-title-group">
+                            <span class="stream-icon">👑</span>
+                            <h3 class="stream-title">B2C Premium Subscriptions</h3>
+                        </div>
+                        <span class="stream-badge">ANCHOR • B2C</span>
+                    </div>
+                    <div class="stream-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value"><span class="highlight-price">BDT 299/mo</span> (Standard) | <span class="highlight-price">BDT 500/mo</span> (Family)</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Value:</span>
+                            <span class="detail-value">Advanced health/disease-specific AI coaching (Diabetes/Hypertension), family-syncing, ad-free experience</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Target:</span>
+                            <span class="detail-value"><span class="highlight-percent">4%</span> conversion of total MAUs (Monthly Active Users)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stream B: Affiliate Commissions -->
+                <div class="stream-card">
+                    <div class="stream-header">
+                        <div class="stream-title-group">
+                            <span class="stream-icon">🤝</span>
+                            <h3 class="stream-title">Affiliate Commissions</h3>
+                        </div>
+                        <span class="stream-badge">SCALER • B2B</span>
+                    </div>
+                    <div class="stream-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Take-rate:</span>
+                            <span class="detail-value"><span class="highlight-percent">5%</span> avg. on BDT 2,500+ cart fulfilled via API partners</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Partners:</span>
+                            <span class="detail-value">Chaldal, Shwapno, local markets integration</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Frequency:</span>
+                            <span class="detail-value"><strong>2.2</strong> grocery orders per user per month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stream C: Marketplace Fees -->
+                <div class="stream-card">
+                    <div class="stream-header">
+                        <div class="stream-title-group">
+                            <span class="stream-icon">🏪</span>
+                            <h3 class="stream-title">C2C Marketplace Fees</h3>
+                        </div>
+                        <span class="stream-badge">SOCIAL • C2C</span>
+                    </div>
+                    <div class="stream-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Model:</span>
+                            <span class="detail-value"><span class="highlight-percent">10%</span> transaction fee on peer-to-peer excess food sales between neighbors</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Volume:</span>
+                            <span class="detail-value">Predicted <strong>0.8 transactions/user/month</strong> in high-density urban zones</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stream D: B2B Data SaaS -->
+                <div class="stream-card">
+                    <div class="stream-header">
+                        <div class="stream-title-group">
+                            <span class="stream-icon">📊</span>
+                            <h3 class="stream-title">B2B Data SaaS</h3>
+                        </div>
+                        <span class="stream-badge">LONG GAME • B2B</span>
+                    </div>
+                    <div class="stream-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Value:</span>
+                            <span class="detail-value">Selling anonymized, item-level <strong>"Pantry Consumption Data"</strong> to FMCG brands (Unilever, Nestlé) for supply chain optimization</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Privacy:</span>
+                            <span class="detail-value">Federated learning ensures user privacy while enabling insights</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Waterfall Chart & Margins -->
+            <div class="chart-column">
+                <!-- Waterfall Chart -->
+                <div class="waterfall-container">
+                    <h3 class="chart-title">📊 Revenue Mix Evolution: Year 1 → Year 5</h3>
+                    
+                    <div class="waterfall-chart">
+                        <!-- Year 1 -->
+                        <div class="year-row">
+                            <div class="year-label">Year 1</div>
+                            <div class="bar-container" style="width: 65%;">
+                                <div class="bar-fill bar-subscription">65%</div>
+                            </div>
+                            <div class="bar-container" style="width: 22%;">
+                                <div class="bar-fill bar-commission">22%</div>
+                            </div>
+                            <div class="bar-container" style="width: 8%;">
+                                <div class="bar-fill bar-marketplace">8%</div>
+                            </div>
+                            <div class="bar-container" style="width: 5%;">
+                                <div class="bar-fill bar-data">5%</div>
+                            </div>
+                        </div>
+
+                        <!-- Year 2 -->
+                        <div class="year-row">
+                            <div class="year-label">Year 2</div>
+                            <div class="bar-container" style="width: 50%;">
+                                <div class="bar-fill bar-subscription">50%</div>
+                            </div>
+                            <div class="bar-container" style="width: 31%;">
+                                <div class="bar-fill bar-commission">31%</div>
+                            </div>
+                            <div class="bar-container" style="width: 12%;">
+                                <div class="bar-fill bar-marketplace">12%</div>
+                            </div>
+                            <div class="bar-container" style="width: 7%;">
+                                <div class="bar-fill bar-data">7%</div>
+                            </div>
+                        </div>
+
+                        <!-- Year 3 -->
+                        <div class="year-row">
+                            <div class="year-label">Year 3</div>
+                            <div class="bar-container" style="width: 35%;">
+                                <div class="bar-fill bar-subscription">35%</div>
+                            </div>
+                            <div class="bar-container" style="width: 38%;">
+                                <div class="bar-fill bar-commission">38%</div>
+                            </div>
+                            <div class="bar-container" style="width: 17%;">
+                                <div class="bar-fill bar-marketplace">17%</div>
+                            </div>
+                            <div class="bar-container" style="width: 10%;">
+                                <div class="bar-fill bar-data">10%</div>
+                            </div>
+                        </div>
+
+                        <!-- Year 4 -->
+                        <div class="year-row">
+                            <div class="year-label">Year 4</div>
+                            <div class="bar-container" style="width: 27%;">
+                                <div class="bar-fill bar-subscription">27%</div>
+                            </div>
+                            <div class="bar-container" style="width: 40%;">
+                                <div class="bar-fill bar-commission">40%</div>
+                            </div>
+                            <div class="bar-container" style="width: 20%;">
+                                <div class="bar-fill bar-marketplace">20%</div>
+                            </div>
+                            <div class="bar-container" style="width: 13%;">
+                                <div class="bar-fill bar-data">13%</div>
+                            </div>
+                        </div>
+
+                        <!-- Year 5 -->
+                        <div class="year-row">
+                            <div class="year-label">Year 5</div>
+                            <div class="bar-container" style="width: 22%;">
+                                <div class="bar-fill bar-subscription">22%</div>
+                            </div>
+                            <div class="bar-container" style="width: 41%;">
+                                <div class="bar-fill bar-commission">41%</div>
+                            </div>
+                            <div class="bar-container" style="width: 22%;">
+                                <div class="bar-fill bar-marketplace">22%</div>
+                            </div>
+                            <div class="bar-container" style="width: 15%;">
+                                <div class="bar-fill bar-data">15%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color bar-subscription"></div>
+                            <span>B2C Sub</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color bar-commission"></div>
+                            <span>Commission</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color bar-marketplace"></div>
+                            <span>Marketplace</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color bar-data"></div>
+                            <span>Data SaaS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gross Margin Badge -->
+                <div class="margin-badge">
+                    <div class="margin-text">
+                        ✨ Gross Margins Path to <strong>70%+</strong> as AI Costs Dilute ✨
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Slide 16 / 20</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-rev');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg}')`;
+            });
+        });
+
+        // Add interactive effects to bars
+        document.querySelectorAll('.bar-container').forEach(bar => {
+            bar.addEventListener('mouseenter', () => {
+                bar.style.boxShadow = '0 6px 16px rgba(0,0,0,0.3)';
+            });
+            bar.addEventListener('mouseleave', () => {
+                bar.style.boxShadow = '';
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

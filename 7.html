@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competitive Landscape & Moat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-compete {
+            position: absolute;
+            font-size: 2.4rem;
+            opacity: 0.1;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .comp-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .comp-2 { top: 16%; right: 6%; animation-delay: 1.4s; }
+        .comp-3 { bottom: 14%; left: 8%; animation-delay: 2.8s; }
+        .comp-4 { bottom: 20%; right: 10%; animation-delay: 1.9s; }
+        .comp-5 { top: 48%; left: 2%; animation-delay: 1s; }
+        .comp-6 { top: 58%; right: 3%; animation-delay: 3.4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 2.2rem 3.2rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 1.1rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #C62828;
+            text-shadow: 2px 2px 4px rgba(198, 40, 40, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+        }
+
+        .title-icon {
+            font-size: 2.2rem;
+            animation: shield-glow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes shield-glow {
+            0%, 100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+            50% { transform: scale(1.08) rotate(-5deg); filter: brightness(1.15); }
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #D32F2F;
+            font-weight: 500;
+            margin-top: 0.35rem;
+            line-height: 1.4;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.4rem;
+            max-height: calc(100% - 8.5rem);
+        }
+
+        /* Glass Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 6px 28px rgba(198, 40, 40, 0.06);
+            padding: 1.4rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid rgba(198, 40, 40, 0.18);
+        }
+
+        .card-icon {
+            font-size: 1.7rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.12rem;
+            font-weight: 700;
+            color: #C62828;
+        }
+
+        /* Left Column - Competitors */
+        .competitor-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            overflow-y: auto;
+            padding-right: 0.3rem;
+        }
+
+        .competitor-item {
+            background: rgba(255, 235, 238, 0.45);
+            border-radius: 12px;
+            padding: 0.95rem;
+            border-left: 4px solid #EF5350;
+            transition: all 0.3s ease;
+        }
+
+        .competitor-item:hover {
+            background: rgba(255, 235, 238, 0.7);
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(198, 40, 40, 0.12);
+        }
+
+        .competitor-name {
+            font-weight: 700;
+            color: #B71C1C;
+            font-size: 0.94rem;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .competitor-type {
+            font-size: 0.72rem;
+            background: rgba(229, 57, 53, 0.15);
+            color: #C62828;
+            padding: 0.15rem 0.55rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .competitor-flaw {
+            font-size: 0.82rem;
+            color: #424242;
+            line-height: 1.5;
+            padding-left: 0.3rem;
+        }
+
+        .flaw-label {
+            font-weight: 600;
+            color: #D32F2F;
+        }
+
+        /* Right Column - Our Moat */
+        .moat-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .moat-item {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.12) 0%, rgba(129, 199, 132, 0.06) 100%);
+            border-radius: 14px;
+            padding: 1.05rem;
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .moat-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(76, 175, 80, 0.18);
+            border-color: #66BB6A;
+        }
+
+        .moat-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.55rem;
+        }
+
+        .moat-icon {
+            font-size: 1.5rem;
+        }
+
+        .moat-title {
+            font-weight: 700;
+            color: #2E7D32;
+            font-size: 0.96rem;
+        }
+
+        .moat-desc {
+            font-size: 0.82rem;
+            color: #424242;
+            line-height: 1.5;
+            padding-left: 2rem;
+        }
+
+        /* Data Flywheel Visualization */
+        .flywheel-container {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(66, 165, 245, 0.05) 100%);
+            border: 2px solid rgba(33, 150, 243, 0.3);
+            border-radius: 14px;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .flywheel-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #1565C0;
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .flywheel-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .flywheel-node {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #42A5F5;
+            border-radius: 10px;
+            padding: 0.5rem 0.7rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #0D47A1;
+            transition: all 0.3s ease;
+        }
+
+        .flywheel-node:hover {
+            background: #E3F2FD;
+            transform: scale(1.08);
+        }
+
+        .flywheel-arrow {
+            font-size: 1.3rem;
+            color: #1976D2;
+            animation: spin-arrow 3s linear infinite;
+        }
+
+        @keyframes spin-arrow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* Scrollbar styling */
+        .competitor-list::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .competitor-list::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 3px;
+        }
+
+        .competitor-list::-webkit-scrollbar-thumb {
+            background: rgba(198, 40, 40, 0.3);
+            border-radius: 3px;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 2rem 2.5rem; }
+            .main-title { font-size: 1.75rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper { 
+                grid-template-columns: 1fr; 
+                gap: 1rem;
+            }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-compete comp-1">🛡️</div>
+        <div class="floating-compete comp-2">⚔️</div>
+        <div class="floating-compete comp-3">📊</div>
+        <div class="floating-compete comp-4">🔄</div>
+        <div class="floating-compete comp-5">🏆</div>
+        <div class="floating-compete comp-6">💪</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#C62828"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#D32F2F"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#EF5350"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#F44336"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">🛡️</span>
+                Competitive Landscape & The "MealMate Moat"
+                <span class="title-icon">🛡️</span>
+            </h1>
+            <p class="subtitle">Why Generic Apps Fail and We Win</p>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            <!-- Left Column - Fragmented Competition -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <span class="card-icon">⚠️</span>
+                    <h2 class="card-title">The Fragmented Landscape</h2>
+                </div>
+                
+                <div class="competitor-list">
+                    <div class="competitor-item">
+                        <div class="competitor-name">
+                            🛒 Chaldal / Grocers
+                            <span class="competitor-type">TRANSACTION</span>
+                        </div>
+                        <div class="competitor-flaw">
+                            <span class="flaw-label">Focus:</span> Selling more food<br>
+                            <span class="flaw-label">Missing:</span> Not solving consumption (using what you have)
+                        </div>
+                    </div>
+
+                    <div class="competitor-item">
+                        <div class="competitor-name">
+                            🏋️ MyFitnessPal / Generic AI
+                            <span class="competitor-type">NUTRITION</span>
+                        </div>
+                        <div class="competitor-flaw">
+                            <span class="flaw-label">Missing:</span> Lack local ingredient databases (e.g., Ilish fish, regional lentils)<br>
+                            <span class="flaw-label">Gap:</span> No local price volatility tracking
+                        </div>
+                    </div>
+
+                    <div class="competitor-item">
+                        <div class="competitor-name">
+                            🤝 Olio / Sharing Apps
+                            <span class="competitor-type">WASTE</span>
+                        </div>
+                        <div class="competitor-flaw">
+                            <span class="flaw-label">Solves:</span> "Waste" end of problem<br>
+                            <span class="flaw-label">Missing:</span> The critical "Planning" beginning
+                        </div>
+                    </div>
+
+                    <div class="competitor-item" style="border-left-color: #FFA726;">
+                        <div class="competitor-name" style="color: #E65100;">
+                            ❌ Common Failure Mode
+                        </div>
+                        <div class="competitor-flaw">
+                            All competitors address only ONE piece of the puzzle. None connect inventory → decision → commerce in a closed loop.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Our Proprietary Moat -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <span class="card-icon">🏆</span>
+                    <h2 class="card-title">Our Proprietary Moat (Decision Engine)</h2>
+                </div>
+                
+                <div class="moat-section">
+                    <div class="moat-item">
+                        <div class="moat-header">
+                            <span class="moat-icon">📊</span>
+                            <h3 class="moat-title">The Pantry Graph</h3>
+                        </div>
+                        <div class="moat-desc">
+                            A living data layer showing what is currently inside user's home in real-time — our unique competitive advantage
+                        </div>
+                    </div>
+
+                    <div class="moat-item">
+                        <div class="moat-header">
+                            <span class="moat-icon">🔄</span>
+                            <h3 class="moat-title">Data Flywheel Effect</h3>
+                        </div>
+                        <div class="moat-desc">
+                            Every scanned receipt and tracked meal makes our "Use-First" spoilage algorithm more accurate, creating high user switching costs
+                        </div>
+                    </div>
+
+                    <div class="moat-item">
+                        <div class="moat-header">
+                            <span class="moat-icon">👨‍👩‍👧</span>
+                            <h3 class="moat-title">The "Mother-in-the-Loop"</h3>
+                        </div>
+                        <div class="moat-desc">
+                            Verified community reviews of home-cooked meals create trust layer that big-tech platforms cannot easily replicate
+                        </div>
+                    </div>
+
+                    <!-- Data Flywheel Visual -->
+                    <div class="flywheel-container">
+                        <div class="flywheel-title">
+                            <span>♻️</span> Data Flywheel Loop
+                        </div>
+                        <div class="flywheel-diagram">
+                            <div class="flywheel-node">📸 Scan Receipt</div>
+                            <span class="flywheel-arrow">→</span>
+                            <div class="flywheel-node">🧠 Improve AI</div>
+                            <span class="flywheel-arrow">→</span>
+                            <div class="flywheel-node">✅ Better Recs</div>
+                            <span class="flywheel-arrow">→</span>
+                            <div class="flywheel-node">😊 Happy User</div>
+                            <span class="flywheel-arrow">→</span>
+                            <div class="flywheel-node">🔄 More Data</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Slide 7 / 20</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-compete');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg'})`;
+            });
+        });
+
+        // Add interactive effects to moat items
+        document.querySelectorAll('.moat-item').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.borderColor = '#4CAF50';
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.borderColor = 'rgba(76, 175, 80, 0.3)';
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

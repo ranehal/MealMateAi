@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Model Canvas - GroceryGOD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-biz {
+            position: absolute;
+            font-size: 2.3rem;
+            opacity: 0.11;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .biz-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .biz-2 { top: 16%; right: 6%; animation-delay: 1.4s; }
+        .biz-3 { bottom: 14%; left: 8%; animation-delay: 2.8s; }
+        .biz-4 { bottom: 20%; right: 10%; animation-delay: 1.9s; }
+        .biz-5 { top: 48%; left: 2%; animation-delay: 1s; }
+        .biz-6 { top: 58%; right: 3%; animation-delay: 3.4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 1.8rem 2.8rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 0.85rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.95rem;
+            font-weight: 700;
+            color: #1565C0;
+            text-shadow: 2px 2px 4px rgba(21, 101, 192, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+        }
+
+        .title-icon {
+            font-size: 2.15rem;
+            animation: canvas-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes canvas-pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.08) rotate(-3deg); }
+            75% { transform: scale(1.08) rotate(3deg); }
+        }
+
+        .subtitle {
+            font-size: 0.92rem;
+            color: #1976D2;
+            font-weight: 600;
+            margin-top: 0.35rem;
+        }
+
+        /* Content Area - Canvas Grid */
+        .canvas-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 0.75rem;
+            max-height: calc(100% - 7.5rem);
+        }
+
+        /* Canvas Block Styles */
+        .canvas-block {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 6px 24px rgba(33, 150, 243, 0.08);
+            padding: 0.9rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .canvas-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .canvas-block:hover::before {
+            left: 100%;
+        }
+
+        .canvas-block:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 32px rgba(33, 150, 243, 0.18);
+            border-color: rgba(66, 165, 245, 0.6);
+        }
+
+        /* Block Header */
+        .block-header {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.55rem;
+            border-bottom: 2px solid rgba(33, 150, 243, 0.2);
+        }
+
+        .block-icon {
+            font-size: 1.5rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .block-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #0D47A1;
+            line-height: 1.2;
+        }
+
+        /* Block Content */
+        .block-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .content-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.35rem;
+            font-size: 0.72rem;
+            line-height: 1.4;
+            color: #424242;
+            padding: 0.35rem 0.45rem;
+            background: rgba(227, 242, 253, 0.4);
+            border-radius: 7px;
+            transition: all 0.3s ease;
+        }
+
+        .content-item:hover {
+            background: rgba(187, 222, 251, 0.6);
+            transform: translateX(3px);
+        }
+
+        .item-bullet {
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            margin-top: 0.05rem;
+        }
+
+        /* Special Color Variants */
+        .block-partners { border-color: rgba(76, 175, 80, 0.4); }
+        .block-partners:hover { border-color: #66BB6A; box-shadow: 0 12px 32px rgba(76, 175, 80, 0.18); }
+        .block-partners .block-icon { color: #2E7D32; }
+        .block-partners .block-title { color: #1B5E20; }
+
+        .block-activities { border-color: rgba(230, 81, 0, 0.4); }
+        .block-activities:hover { border-color: #FFA726; box-shadow: 0 12px 32px rgba(230, 81, 0, 0.18); }
+        .block-activities .block-icon { color: #E65100; }
+        .block-activities .block-title { color: #BF360C; }
+
+        .block-value { border-color: rgba(171, 71, 188, 0.4); }
+        .block-value:hover { border-color: #AB47BC; box-shadow: 0 12px 32px rgba(171, 71, 188, 0.18); }
+        .block-value .block-icon { color: #7B1FA2; }
+        .block-value .block-title { color: #4A148C; }
+
+        .block-customers { border-color: rgba(233, 30, 99, 0.4); }
+        .block-customers:hover { border-color: #E91E63; box-shadow: 0 12px 32px rgba(233, 30, 99, 0.18); }
+        .block-customers .block-icon { color: #C2185B; }
+        .block-customers .block-title { color: #AD1457; }
+
+        .block-segments { border-color: rgba(103, 58, 183, 0.4); }
+        .block-segments:hover { border-color: #5C6BC0; box-shadow: 0 12px 32px rgba(103, 58, 183, 0.18); }
+        .block-segments .block-icon { color: #283593; }
+        .block-segments .block-title { color: #1A237E; }
+
+        .block-resources { border-color: rgba(255, 152, 0, 0.4); }
+        .block-resources:hover { border-color: #FFC107; box-shadow: 0 12px 32px rgba(255, 193, 7, 0.18); }
+        .block-resources .block-icon { color: #F57C00; }
+        .block-resources .block-title { color: #E65100; }
+
+        .block-channels { border-color: rgba(0, 151, 167, 0.4); }
+        .block-channels:hover { border-color: #00BCD4; box-shadow: 0 12px 32px rgba(0, 188, 212, 0.18); }
+        .block-channels .block-icon { color: #0097A7; }
+        .block-channels .block-title { color: #00606D; }
+
+        .block-costs { border-color: rgba(198, 40, 40, 0.4); }
+        .block-costs:hover { border-color: #EF5350; box-shadow: 0 12px 32px rgba(198, 40, 40, 0.18); }
+        .block-costs .block-icon { color: #C62828; }
+        .block-costs .block-title { color: #B71C1C; }
+
+        .block-revenue { border-color: rgba(76, 175, 80, 0.5); background: linear-gradient(135deg, rgba(76, 175, 80, 0.08), rgba(129, 199, 132, 0.03)); }
+        .block-revenue:hover { border-color: #4CAF50; box-shadow: 0 14px 36px rgba(76, 175, 80, 0.25); transform: translateY(-8px) scale(1.03); }
+        .block-revenue .block-icon { color: #2E7D32; font-size: 1.7rem; }
+        .block-revenue .block-title { color: #1B5E20; font-size: 0.95rem; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 0.8rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 1.6rem 2.3rem; }
+            .main-title { font-size: 1.7rem; }
+            .content-item { font-size: 0.68rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .canvas-wrapper { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 0.6rem;
+            }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-biz biz-1">🤝</div>
+        <div class="floating-biz biz-2">🤝</div>
+        <div class="floating-biz biz-3">💼</div>
+        <div class="floating-biz biz-4">🎯</div>
+        <div class="floating-biz biz-5">⚙️</div>
+        <div class="floating-biz biz-6">🔗</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1565C0"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1976D2"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#1E88E5"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#42A5F5"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">📋</span>
+                Business Model Canvas: GroceryGOD
+                <span class="title-icon">📋</span>
+            </h1>
+            <p class="subtitle">Complete Ecosystem Overview & Value Architecture</p>
+        </div>
+
+        <!-- Canvas Grid -->
+        <div class="canvas-wrapper">
+            <!-- Block 1: Key Partners -->
+            <div class="canvas-block block-partners">
+                <div class="block-header">
+                    <span class="block-icon">🤝</span>
+                    <h3 class="block-title">KEY PARTNERS</h3>
+                </div>
+                <div class="block-content">
+                    <div class="content-item">
+                        <span class="item-bullet">🛒️</span>
+                        <span>Grocery platforms (Chaldal, Shwapno)</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🏪</span>
+                        <span>Local retailers & bazaars</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">👨‍🍳</span>
+                        <span>Home cooks & community sellers</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🏛️</span>
+                        <span>NGOs / municipalities</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🥗</span>
+                        <span>Nutrition & health databases</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 2: Key Activities -->
+            <div class="canvas-block block-activities">
+                <div class="block-header">
+                    <span class="block-icon">⚡</span>
+                    <h3 class="block-title">KEY ACTIVITIES</h3>
+                </div>
+                <div class="block-content">
+                    <div class="content-item">
+                        <span class="item-bullet">🧠</span>
+                        <span>AI meal planning engine</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">📸</span>
+                        <span>Pantry recognition (CV/OCR)</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🍳</span>
+                        <span>Recipe optimization (FEFO logic)</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">✅</span>
+                        <span>Food safety & freshness tracking</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">👥</span>
+                        <span>Community moderation & trust</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🔗</span>
+                        <span>Retail API integrations</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 3: Value Propositions -->
+            <div class="canvas-block block-value">
+                <div class="block-header">
+                    <span class="block-icon">💎</span>
+                    <h3 class="block-title">VALUE PROPOSITIONS</h3>
+                </div>
+                <div class="block-content">
+                    <div class="content-item">
+                        <span class="item-bullet">🥗</span>
+                        <span><strong>Eat better, waste less</strong></span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🎯</span>
+                        <span>Smart "use-first" cooking suggestions</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🛒</span>
+                        <span>Auto grocery decisions & restocking</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">💰</span>
+                        <span>Budget optimization + nutrition goals</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">👨‍👩‍👧</span>
+                        <span>Family meal sync & coordination</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🍽️</span>
+                        <span>Dine-out recalibration based on pantry</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 4: Customer Relationships -->
+            <div class="canvas-block block-customers">
+                <div class="block-header">
+                    <span class="block-icon">❤️</span>
+                    <h3 class="block-title">CUSTOMER RELATIONSHIPS</h3>
+                </div>
+                <div class="block-content">
+                    <div class="content-item">
+                        <span class="item-bullet">📱</span>
+                        <span>Personalized meal plans & recommendations</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🔔</span>
+                        <span>Daily smart nudges & reminders</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">📊</span>
+                        <span>Habit tracking & progress analytics</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">♻️</span>
+                        <span>Waste reduction metrics & insights</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🤝</span>
+                        <span>Community marketplace engagement</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 5: Customer Segments -->
+            <div class="canvas-block block-segments">
+                <div class="block-header">
+                    <span class="block-icon">👥</span>
+                    <h3 class="block-title">CUSTOMER SEGMENTS</h3>
+                </div>
+                <div class="block-content">
+                    <div class="content-item">
+                        <span class="item-bullet">👩</span>
+                        <span><strong>Mothers (PRIMARY)</strong></span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">💼</span>
+                        <span>Urban professionals (time-poor)</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">💵</span>
+                        <span>Budget-conscious households</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🎓</span>
+                        <span>Students / shared housing</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🥗</span>
+                        <span>Health-focused individuals</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bitmap">👨‍🍳</span>
+                        <span>Home cooks (marketplace sellers)</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🏪</span>
+                        <span>Retailers (B2B partners)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 6: Key Resources -->
+            <div class="canvas-block block-resources">
+                <div class="block-header">
+                    <span class="block-icon">📦</span>
+                    <h3 class="block-title">KEY RESOURCES</h3>
+                </div>
+                <div class="block-content">
+                    <div class="content-item">
+                        <span class="item-bullet">🗄️</span>
+                        <span>Food graph database & knowledge base</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🥬</span>
+                        <span>Freshness prediction engine</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🤖</span>
+                        <span>AI models (Computer Vision + NLP)</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">📊</span>
+                        <span>User behavior data & analytics</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">📚</span>
+                        <span>Recipe & nutrition database</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 7: Channels -->
+            <div class="canvas-block block-channels">
+                <div class="block-header">
+                    <span class="block-icon">📢</span>
+                    <h3 class="block-title">CHANNELS</h3>
+                </div>
+                <div class="block-content">
+                    <div class="content-item">
+                        <span class="item-bullet">📱</span>
+                        <span><strong>Mobile app (core platform)</strong></span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🛒️</span>
+                        <span>Grocery platform integrations</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">📱</span>
+                        <span>Social media presence</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bitmap">👥</span>
+                        <span>Community groups & forums</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bitmap">🌟</span>
+                        <span>Influencers / "Mom" ambassadors</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 8: Cost Structure -->
+            <div class="canvas-block block-costs">
+                <div class="block-header">
+                    <span class="block-icon">💳</span>
+                    <h3 class="block-title">COST STRUCTURE</h3>
+                </div>
+                <div class="block-content">
+                    <div class="content-item">
+                        <span class="item-bullet">☁️</span>
+                        <span>AI & Cloud infrastructure costs</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">👨‍💻</span>
+                        <span>Engineering & Product development team</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🔬</span>
+                        <span>Nutrition validation & expert consultation</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">📣</span>
+                        <span>Marketing & user acquisition spend</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">🛡️</span>
+                        <span>Trust & safety operations</span>
+                    </div>
+                    <div class="content-item">
+                        <span class="item-bullet">⚖️</span>
+                        <span>Legal & compliance expenses</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 9: Revenue Streams (Highlighted) -->
+            <div class="canvas-block block-revenue">
+                <div class="block-header">
+                    <span class="block-icon">💰</span>
+                    <h3 class="block-title">REVENUE STREAMS</h3>
+                </div>
+                <div class="block-content">
+                    <div class="content-item" style="background: rgba(200, 230, 201, 0.3);">
+                        <span class="item-bullet">👑</span>
+                        <span><strong>Premium Subscriptions</strong> (B2C)</span>
+                    </div>
+                    <div class="content-item" style="background: rgba(200, 230, 201, 0.3);">
+                        <span class="item-bullet">🤝</span>
+                        <span><strong>Grocery Affiliate Commissions</strong> (B2B)</span>
+                    </div>
+                    <div class="content-item" style="background: rgba(200, 230, 201, 0.3);">
+                        <span class="item-bullet">🏪</span>
+                        <span><strong>Marketplace Transaction Fees</strong> (C2C)</span>
+                    </div>
+                    <div class="content-item" style="background: rgba(200, 230, 201, 0.3);">
+                        <span class="item-bullet">📊</span>
+                        <span><strong>Sponsored Placements</strong> (Advertising)</span>
+                    </div>
+                    <div class="content-item" style="background: rgba(200, 230, 201, 0.3);">
+                        <span class="item-bullet">🏢</span>
+                        <span><strong>B2B SaaS / White-label Data</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Business Model Canvas • Slide 21 / 21</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-biz');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg'})`;
+            });
+        });
+
+        // Add interactive hover effects to all blocks
+        document.querySelectorAll('.canvas-block').forEach(block => {
+            block.addEventListener('mouseenter', () => {
+                block.style.zIndex = '20';
+            });
+            block.addEventListener('mouseleave', () => {
+                block.style.zIndex = '10';
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>

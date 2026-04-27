@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Opportunity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%);
+            position: relative;
+        }
+
+        /* Background Decorations */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-market {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.11;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .market-1 { top: 8%; left: 4%; animation-delay: 0s; }
+        .market-2 { top: 16%; right: 6%; animation-delay: 1.4s; }
+        .market-3 { bottom: 14%; left: 8%; animation-delay: 2.8s; }
+        .market-4 { bottom: 20%; right: 10%; animation-delay: 1.9s; }
+        .market-5 { top: 48%; left: 2%; animation-delay: 1s; }
+        .market-6 { top: 58%; right: 3%; animation-delay: 3.4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.09;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .leaf-1 { top: 5%; left: 13%; transform: rotate(-26deg); }
+        .leaf-2 { top: 27%; right: 8%; transform: rotate(42deg); animation-delay: 1.2s; }
+        .leaf-3 { bottom: 17%; left: 6%; transform: rotate(24deg); animation-delay: 2.4s; }
+        .leaf-4 { bottom: 9%; right: 16%; transform: rotate(-42deg); animation-delay: 1.7s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(var(--rotation, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rotation, 0deg) + 11deg)) scale(1.04); }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 2.2rem 3.2rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .main-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.05rem;
+            font-weight: 700;
+            color: #7B1FA2;
+            text-shadow: 2px 2px 4px rgba(123, 31, 162, 0.08);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+        }
+
+        .title-icon {
+            font-size: 2.3rem;
+            animation: pulse-purple 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-purple {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
+        .subtitle {
+            font-size: 0.96rem;
+            color: #8E24AA;
+            font-weight: 500;
+            margin-top: 0.4rem;
+            line-height: 1.4;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            max-height: calc(100% - 8.5rem);
+        }
+
+        /* Left Column - TAM/SAM/SOM Visualization */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .market-pyramid-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 32px rgba(123, 31, 162, 0.08);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            position: relative;
+        }
+
+        .pyramid-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #7B1FA2;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        /* Concentric Circles */
+        .concentric-circles {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .circle:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 40px rgba(123, 31, 162, 0.25);
+        }
+
+        .circle-tam {
+            width: 280px;
+            height: 280px;
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.15) 0%, rgba(186, 104, 200, 0.08) 100%);
+            border: 3px solid rgba(156, 39, 176, 0.35);
+            z-index: 1;
+        }
+
+        .circle-sam {
+            width: 195px;
+            height: 195px;
+            background: linear-gradient(135deg, rgba(103, 58, 183, 0.18) 0%, rgba(149, 117, 205, 0.1) 100%);
+            border: 3px solid rgba(103, 58, 183, 0.4);
+            z-index: 2;
+        }
+
+        .circle-som {
+            width: 115px;
+            height: 115px;
+            background: linear-gradient(135deg, rgba(74, 20, 140, 0.22) 0%, rgba(106, 27, 154, 0.12) 100%);
+            border: 3px solid rgba(74, 20, 140, 0.5);
+            z-index: 3;
+        }
+
+        .circle-label {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .circle-tam .circle-label { color: #7B1FA2; font-size: 1.05rem; }
+        .circle-sam .circle-label { color: #673AB7; font-size: 0.98rem; }
+        .circle-som .circle-label { color: #4A148C; font-size: 0.9rem; }
+
+        .circle-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .circle-tam .circle-value { color: #6A1B9A; font-size: 1.45rem; }
+        .circle-sam .circle-value { color: #512DA8; font-size: 1.28rem; }
+        .circle-som .circle-value { color: #311B92; font-size: 1.15rem; }
+
+        .circle-desc {
+            font-size: 0.72rem;
+            color: #616161;
+            line-height: 1.3;
+            margin-top: 0.3rem;
+            padding: 0 0.5rem;
+        }
+
+        /* Right Column - Details */
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 6px 24px rgba(123, 31, 162, 0.06);
+            padding: 1.3rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .detail-card:hover::before {
+            left: 100%;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(123, 31, 162, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.9rem;
+            padding-bottom: 0.7rem;
+            border-bottom: 2px solid rgba(123, 31, 162, 0.18);
+        }
+
+        .card-icon {
+            font-size: 1.7rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: #7B1FA2;
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .content-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            padding: 0.65rem;
+            background: rgba(237, 231, 246, 0.5);
+            border-radius: 10px;
+            border-left: 3px solid #AB47BC;
+            transition: all 0.3s ease;
+        }
+
+        .content-item:hover {
+            background: rgba(237, 231, 246, 0.75);
+            transform: translateX(4px);
+        }
+
+        .item-bullet {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .item-text {
+            flex: 1;
+            font-size: 0.84rem;
+            color: #424242;
+            line-height: 1.5;
+        }
+
+        .item-text strong {
+            color: #7B1FA2;
+            font-weight: 600;
+        }
+
+        .highlight-stat {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.15), rgba(186, 104, 200, 0.1));
+            color: #6A1B9A;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+
+        /* Target Zones Mini Map */
+        .target-zones {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.12) 0%, rgba(129, 199, 132, 0.06) 100%);
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            border-radius: 16px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .zones-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2E7D32;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .zones-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.7rem;
+        }
+
+        .zone-badge {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(76, 175, 80, 0.35);
+            border-radius: 10px;
+            padding: 0.6rem;
+            font-weight: 600;
+            color: #2E7D32;
+            font-size: 0.88rem;
+            transition: all 0.3s ease;
+        }
+
+        .zone-badge:hover {
+            background: rgba(129, 199, 132, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.88rem;
+            color: #689F38;
+            font-weight: 500;
+        }
+
+        .page-number {
+            display: inline-block;
+            background: rgba(104, 159, 56, 0.15);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1366px) {
+            .main-container { padding: 2rem 2.5rem; }
+            .main-title { font-size: 1.8rem; }
+            .concentric-circles { width: 240px; height: 240px; }
+            .circle-tam { width: 240px; height: 240px; }
+            .circle-sam { width: 168px; height: 168px; }
+            .circle-som { width: 98px; height: 98px; }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper { 
+                grid-template-columns: 1fr; 
+                gap: 1rem;
+            }
+        }
+    </style>
+
+
+<style id="presentation-fix">
+    :root {
+        --base-font-size: 2.2vmin;
+    }
+    * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+    .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        max-height: 100vh;
+        max-width: 177.78vh; /* 16:9 aspect ratio */
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 4vmin !important;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF7 50%, #F5F5DC 100%); /* Default fallback */
+    }
+    /* Re-apply original backgrounds if they were on body */
+    body {
+        background: #000 !important;
+    }
+    
+    .header { margin-bottom: 2vmin !important; }
+    .main-title { font-size: 4vmin !important; }
+    .content-wrapper, .content-grid { 
+        flex: 1; 
+        display: flex; 
+        gap: 3vmin !important; 
+        min-height: 0; 
+        align-items: stretch !important;
+    }
+    .glass-card { 
+        padding: 3vmin !important; 
+        border-radius: 2vmin !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    h2 { font-size: 3vmin !important; margin-bottom: 1.5vmin !important; }
+    p, li, .item-text, .stat-desc, .value-prop-content, .mission-content { 
+        font-size: 2.2vmin !important; 
+        line-height: 1.4 !important; 
+    }
+    .footer { margin-top: auto !important; padding-top: 1vmin !important; }
+    .page-number { font-size: 1.8vmin !important; }
+
+    /* Responsive adjustments */
+    @media (max-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            width: 100vw;
+            height: 56.25vw;
+        }
+    }
+    @media (min-aspect-ratio: 16/9) {
+        .main-container, body > div:not(.bg-decoration):not(.floating-foods) {
+            height: 100vh;
+            width: 177.78vh;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-market market-1">📊</div>
+        <div class="floating-market market-2">🎯</div>
+        <div class="floating-market market-3">💰</div>
+        <div class="floating-market market-4">📈</div>
+        <div class="floating-market market-5">🌏</div>
+        <div class="floating-market market-6">🏙️</div>
+
+        <svg class="leaf leaf-1" viewBox="0 0 100 100" style="--rotation: -26deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#9C27B0"/>
+        </svg>
+        <svg class="leaf leaf-2" viewBox="0 0 100 100" style="--rotation: 42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#AB47BC"/>
+        </svg>
+        <svg class="leaf leaf-3" viewBox="0 0 100 100" style="--rotation: 24deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#BA68C8"/>
+        </svg>
+        <svg class="leaf leaf-4" viewBox="0 0 100 100" style="--rotation: -42deg">
+            <path d="M50 10 Q70 30 70 50 Q70 80 50 90 Q30 80 30 50 Q30 30 50 10Z" fill="#CE93D8"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">
+                <span class="title-icon">📈</span>
+                Market Opportunity (TAM/SAM/SOM)
+                <span class="title-icon">📈</span>
+            </h1>
+            <p class="subtitle">Tapping into the $15B Household Food Management Frontier</p>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            <!-- Left Column - Market Pyramid -->
+            <div class="left-column">
+                <div class="market-pyramid-card">
+                    <h3 class="pyramid-title">🎯 Market Sizing Hierarchy</h3>
+                    
+                    <div class="concentric-circles">
+                        <!-- TAM (Outer Circle) -->
+                        <div class="circle circle-tam">
+                            <div class="circle-label">TAM (Global)</div>
+                            <div class="circle-value">$20B+</div>
+                            <div class="circle-desc">Smart Home & Food Waste Management by 2028</div>
+                        </div>
+
+                        <!-- SAM (Middle Circle) -->
+                        <div class="circle circle-sam">
+                            <div class="circle-label">SAM (Regional)</div>
+                            <div class="circle-value">$1.5B</div>
+                            <div class="circle-desc">Bangladesh/South Asia<br>25M urban households</div>
+                        </div>
+
+                        <!-- SOM (Inner Circle) -->
+                        <div class="circle circle-som">
+                            <div class="circle-label">SOM</div>
+                            <div class="circle-value">$45M</div>
+                            <div class="circle-desc">Dhaka Pilot<br>250K households</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Target Zones -->
+                <div class="target-zones">
+                    <div class="zones-title">
+                        <span>📍</span> Initial Target Zones in Dhaka
+                    </div>
+                    <div class="zones-grid">
+                        <div class="zone-badge">🏘️ Gulshan</div>
+                        <div class="zone-badge">🏡 Dhanmondi</div>
+                        <div class="zone-badge">🏠 Banani</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Strategic Details -->
+            <div class="right-column">
+                <!-- Regional Wedge Card -->
+                <div class="detail-card">
+                    <div class="card-header">
+                        <span class="card-icon">🌍</span>
+                        <h3 class="card-title">The Regional Wedge Advantage</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="content-item">
+                            <span class="item-bullet">👨‍👩‍👧‍👦</span>
+                            <div class="item-text">
+                                Unlike Western markets, Bangladesh has high density of <strong>multi-generational households</strong> where one "Gatekeeper" (Mother/Home Manager) makes <span class="highlight-stat">90%</span> of food decisions
+                            </div>
+                        </div>
+                        <div class="content-item">
+                            <span class="item-bullet">📊</span>
+                            <div class="item-text">
+                                Targeting <span class="highlight-stat">25 million</span> urban middle-class households facing <span class="highlight-stat">12%+</span> food inflation
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Economic Tailwinds Card -->
+                <div class="detail-card">
+                    <div class="card-header">
+                        <span class="card-icon">💨</span>
+                        <h3 class="card-title">Economic Tailwinds</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="content-item">
+                            <span class="item-bullet">💰</span>
+                            <div class="item-text">
+                                <strong>Rising disposable income</strong> coupled with "Time Poverty" of urban professionals makes automated meal planning a <strong>necessity, not luxury</strong>
+                            </div>
+                        </div>
+                        <div class="content-item">
+                            <span class="item-bullet">⚡</span>
+                            <div class="item-text">
+                                <strong>High-frequency opportunity:</strong> Capture <span class="highlight-stat">250,000 households</span> in Dhaka within <span class="highlight-stat">24 months</span>
+                            </div>
+                        </div>
+                        <div class="content-item">
+                            <span class="item-bullet">🎯</span>
+                            <div class="item-text">
+                                First-mover advantage in underserved South Asian smart kitchen market
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="page-number">Slide 6 / 20</span>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-market');
+            const leaves = document.querySelectorAll('.leaf');
+            
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+
+            leaves.forEach((leaf, index) => {
+                const speed = (index + 1) * 4;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                leaf.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${leaf.style.getPropertyValue('--rotation') || '0deg'})`;
+            });
+        });
+
+        // Add interactive hover effects to circles
+        document.querySelectorAll('.circle').forEach(circle => {
+            circle.addEventListener('mouseenter', () => {
+                circle.style.zIndex = '10';
+            });
+            circle.addEventListener('mouseleave', () => {
+                // Reset to original z-index based on class
+                if (circle.classList.contains('circle-tam')) circle.style.zIndex = '1';
+                else if (circle.classList.contains('circle-sam')) circle.style.zIndex = '2';
+                else if (circle.classList.contains('circle-som')) circle.style.zIndex = '3';
+            });
+        });
+    </script>
+    <script src="navigation.js"></script>
+</body>
+</html>
