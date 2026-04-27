@@ -190,6 +190,8 @@
             background: linear-gradient(135deg, rgba(156, 39, 176, 0.15) 0%, rgba(186, 104, 200, 0.08) 100%);
             border: 3px solid rgba(156, 39, 176, 0.35);
             z-index: 1;
+            justify-content: flex-start;
+            padding-top: 1.2rem;
         }
 
         .circle-sam {
@@ -198,6 +200,8 @@
             background: linear-gradient(135deg, rgba(103, 58, 183, 0.18) 0%, rgba(149, 117, 205, 0.1) 100%);
             border: 3px solid rgba(103, 58, 183, 0.4);
             z-index: 2;
+            justify-content: flex-end;
+            padding-bottom: 1.2rem;
         }
 
         .circle-som {
@@ -471,10 +475,10 @@
                     
                     <div class="concentric-circles">
                         <!-- TAM (Outer Circle) -->
-                        <div class="circle circle-tam">
+                        <div class="circle circle-tam" style="z-index: 1;">
                             <div class="circle-label">TAM (Global)</div>
                             <div class="circle-value">$20B+</div>
-                            <div class="circle-desc">Smart Home & Food Waste Management by 2028</div>
+                            <div class="circle-desc">Smart Home & Food Waste<br>Management by 2028</div>
                         </div>
 
                         <!-- SAM (Middle Circle) -->
