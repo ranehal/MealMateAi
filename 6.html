@@ -160,8 +160,8 @@
         /* Concentric Circles */
         .concentric-circles {
             position: relative;
-            width: 280px;
-            height: 280px;
+            width: 320px;
+            height: 320px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -185,28 +185,36 @@
         }
 
         .circle-tam {
-            width: 280px;
-            height: 280px;
+            width: 320px;
+            height: 320px;
             background: linear-gradient(135deg, rgba(156, 39, 176, 0.15) 0%, rgba(186, 104, 200, 0.08) 100%);
             border: 3px solid rgba(156, 39, 176, 0.35);
             z-index: 1;
-            justify-content: flex-start;
-            padding-top: 1.2rem;
+        }
+
+        .circle-tam .circle-content {
+            position: absolute;
+            top: 15px;
+            width: 100%;
         }
 
         .circle-sam {
-            width: 195px;
-            height: 195px;
+            width: 210px;
+            height: 210px;
             background: linear-gradient(135deg, rgba(103, 58, 183, 0.18) 0%, rgba(149, 117, 205, 0.1) 100%);
             border: 3px solid rgba(103, 58, 183, 0.4);
             z-index: 2;
-            justify-content: flex-end;
-            padding-bottom: 1.2rem;
+        }
+
+        .circle-sam .circle-content {
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
         }
 
         .circle-som {
-            width: 115px;
-            height: 115px;
+            width: 110px;
+            height: 110px;
             background: linear-gradient(135deg, rgba(74, 20, 140, 0.22) 0%, rgba(106, 27, 154, 0.12) 100%);
             border: 3px solid rgba(74, 20, 140, 0.5);
             z-index: 3;
@@ -415,10 +423,10 @@
         @media (max-width: 1366px) {
             .main-container { padding: 2rem 2.5rem; }
             .main-title { font-size: 1.8rem; }
-            .concentric-circles { width: 240px; height: 240px; }
-            .circle-tam { width: 240px; height: 240px; }
-            .circle-sam { width: 168px; height: 168px; }
-            .circle-som { width: 98px; height: 98px; }
+            .concentric-circles { width: 280px; height: 280px; }
+            .circle-tam { width: 280px; height: 280px; }
+            .circle-sam { width: 185px; height: 185px; }
+            .circle-som { width: 90px; height: 98px; }
         }
 
         @media (max-width: 1024px) {
@@ -476,16 +484,20 @@
                     <div class="concentric-circles">
                         <!-- TAM (Outer Circle) -->
                         <div class="circle circle-tam" style="z-index: 1;">
-                            <div class="circle-label">TAM (Global)</div>
-                            <div class="circle-value">$20B+</div>
-                            <div class="circle-desc">Smart Home & Food Waste<br>Management by 2028</div>
+                            <div class="circle-content">
+                                <div class="circle-label">TAM (Global)</div>
+                                <div class="circle-value">$20B+</div>
+                                <div class="circle-desc">Smart Home & Food Waste<br>Management by 2028</div>
+                            </div>
                         </div>
 
                         <!-- SAM (Middle Circle) -->
                         <div class="circle circle-sam">
-                            <div class="circle-label">SAM (Regional)</div>
-                            <div class="circle-value">$1.5B</div>
-                            <div class="circle-desc">Bangladesh/South Asia<br>25M urban households</div>
+                            <div class="circle-content">
+                                <div class="circle-label">SAM (Regional)</div>
+                                <div class="circle-value">$1.5B</div>
+                                <div class="circle-desc">Bangladesh/South Asia<br>25M urban households</div>
+                            </div>
                         </div>
 
                         <!-- SOM (Inner Circle) -->
