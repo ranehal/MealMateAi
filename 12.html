@@ -408,6 +408,39 @@
             margin-top: 0.2rem;
         }
 
+        /* Prototype Button */
+        .prototype-link-container {
+            margin-top: 0.5rem;
+            width: 100%;
+        }
+
+        .prototype-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #00695C, #00897B);
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 105, 92, 0.15);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .prototype-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 105, 92, 0.25);
+            background: linear-gradient(135deg, #00796B, #26A69A);
+        }
+
+        .btn-icon {
+            font-size: 1.1rem;
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -603,6 +636,14 @@
                     <div class="retention-label">🎯 Target Retention Rate</div>
                     <div class="retention-value">90%</div>
                     <div class="retention-note">Day-30 User Retention Goal</div>
+                </div>
+
+                <!-- Prototype Link -->
+                <div class="prototype-link-container">
+                    <a href="https://www.figma.com/make/ukLNFaoTnZjQXFhjs24iwl/GroceryGOD-Prototype-Development?p=f&t=5WmmgnArPQGjZg8z-0" target="_blank" class="prototype-btn">
+                        <span class="btn-icon">🔗</span>
+                        View Interactive Figma Prototype
+                    </a>
                 </div>
             </div>
         </div>
